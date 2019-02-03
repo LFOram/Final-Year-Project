@@ -4,17 +4,15 @@ package Project;
  * Created by Leon on 04/12/2018.
  */
 public class PlayerDetails {
-    private String firstName;
-    private String secondName;
+    private String Name;
     private Position position;
     private String number;
     private String Height;
     private String weight;
     private String birthplace;
 
-    public PlayerDetails(String firstName, String secondName, String number, String height, String weight, String birthplace) {
-        this.firstName = firstName;
-        this.secondName = secondName;
+    public PlayerDetails(String Name, String number, String height, String weight, String birthplace) {
+        this.Name = Name;
         this.number = number;
         Height = height;
         this.weight = weight;
