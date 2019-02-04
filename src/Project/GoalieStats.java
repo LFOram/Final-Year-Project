@@ -14,7 +14,51 @@ public class GoalieStats extends Stats{
     private int statPuckHandling;
     private int statPenaltyShot;
 
-    public GoalieStats(String skating, String endurance, String size, String Agility, String rebound, String style, String hand, String puck, String penalty){
+    public GoalieStats(int statSkating, int statEndurance, int statSize, int statAgility, int statReboundControl, int statStyleControl, int statHandSpeed, int statPuckHandling, int statPenaltyShot) {
+        this.statSkating = statSkating;
+        this.statEndurance = statEndurance;
+        this.statSize = statSize;
+        this.statAgility = statAgility;
+        this.statReboundControl = statReboundControl;
+        this.statStyleControl = statStyleControl;
+        this.statHandSpeed = statHandSpeed;
+        this.statPuckHandling = statPuckHandling;
+        this.statPenaltyShot = statPenaltyShot;
+    }
 
+    public int getStatSkating() {
+        return statSkating;
+    }
+
+    public int getStatEndurance() {
+        return statEndurance;
+    }
+
+    public int getStatSize() {
+        return statSize;
+    }
+
+    public int getStatAgility() {
+        return statAgility;
+    }
+
+    public int getStatReboundControl() {
+        return statReboundControl;
+    }
+
+    public int getStatStyleControl() {
+        return statStyleControl;
+    }
+
+    public int getStatHandSpeed() {
+        return statHandSpeed;
+    }
+
+    public int getStatPuckHandling() {
+        return statPuckHandling;
+    }
+
+    public int getStatPenaltyShot() {
+        return statPenaltyShot;
     }
 }

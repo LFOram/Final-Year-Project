@@ -12,4 +12,11 @@ public class Goalie extends Player{
         super(player);
         this.stats = stats;
     }
+
+    public String toString(){
+        String string = position.toString() + " - " +  super.toString();
+        string += " SK:"+stats.getStatSkating()+" EN:"+stats.getStatEndurance()+" SI:"+stats.getStatSize()+" AG:"+stats.getStatAgility()+" RB:"+stats.getStatReboundControl();
+        string += " SC"+stats.getStatStyleControl()+" HS:"+stats.getStatHandSpeed()+" PH:"+stats.getStatPuckHandling()+" PS:"+stats.getStatPenaltyShot();
+        return string;
+    }
 }

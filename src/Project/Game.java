@@ -1,18 +1,21 @@
 package Project;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * Created by Leon on 16/01/2019.
  */
 public class Game {
     //Fields
+    Connection conn = null;
+
     private Team homeTeam;
     private Team awayTeam;
 
@@ -33,80 +36,122 @@ public class Game {
         //load lines
         homeLines = loadLines(homeTeam, homePlayers);
         awayLines = loadLines(awayTeam, awayPlayers);
-
-
     }
 
-    private HashMap<String,Player> loadTeam(Team load){
-        HashMap<String,Player> playerList = new HashMap<>();
-        String file = "Rosters.csv";
+    private HashMap<String,Player> loadTeam(Team load) {
 
-        //scanner to read file
+        HashMap<String, Player> playerList = new HashMap<>();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            //Class.forName("com.mysql.jdbc.Driver").newInstance();
+            String url = "jdbc:mysql://127.0.0.1:3306/project";
+            String username = "Java";
+            String password = "";
+            conn =DriverManager.getConnection(url,username,password);//jdbc:mysql://
+        } catch (Exception ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            //System.out.println("SQLState: " + ex.getSQLState());
+            //System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM Players WHERE Team = ?");
+            stmt.setString(1,load.name());
+            rs = stmt.executeQuery();
 
-            String line = null;
-            Scanner scanner = null;
-            Team[] teams = Team.values();
+            while (rs.next()) {
+                //To Player Details object
+                String name = rs.getString("Name");
+                String country = rs.getString("Country");
+                String rookie = rs.getString("Rookie");
+                int height = rs.getInt("Height");
+                int weight = rs.getInt("Weight");
 
-            while ((line = reader.readLine()) != null) {
-                if (Arrays.asList(teams).contains(line)) { //Start new team
-                    if (line.equals(load.name())) { //if team we want to load
-                        String[] playerLine = line.split(",");
-                        PlayerDetails playerDetails = new PlayerDetails(playerLine[0], playerLine[6], playerLine[8], playerLine[7], playerLine[2]);
-                        //get position
-                        if (playerLine[1].equals("16")){
-                            //goalie
-                            GoalieStats playerStats = new GoalieStats(playerLine[12],playerLine[13],playerLine[14],playerLine[15],playerLine[16],playerLine[17],playerLine[18],playerLine[19],playerLine[20]);
-                            Player player = new Goalie(playerDetails,playerStats);
-                            playerList.put(playerLine[0].toLowerCase(),player);
-                        }
-                        else{
-                            SkaterStats playerStats = new SkaterStats(playerLine[12],playerLine[13],playerLine[14],playerLine[15],playerLine[16],playerLine[17],playerLine[18],playerLine[19],playerLine[20],playerLine[21],playerLine[22],playerLine[23]);
-                            //get position
-                            int rawposition = Integer.parseInt(playerLine[1]);
-                            Position position = null;
-                            switch (rawposition){
-                                case 1:
-                                    position = Position.CENTER;
-                                    break;
-                                case 2:
-                                    position = Position.LWING;
-                                    break;
-                                case 4:
-                                    position = Position.RWING;
-                                    break;
-                                case 8:
-                                    position = Position.DEFENCE;
-                                    break;
-                            }
+                PlayerDetails newPlayerDetails = new PlayerDetails(name, "22", height, weight, country);
 
-                            Player player = new Skater(playerDetails,position,playerStats);
-                            playerList.put(playerLine[0].toLowerCase(),player);
-                        }
-
-                    }
+                int rawposition = rs.getInt("Position");
+                Position position = null;
+                switch (rawposition) {
+                    case 1:
+                        position = Position.CENTER;
+                        break;
+                    case 2:
+                        position = Position.LWING;
+                        break;
+                    case 4:
+                        position = Position.RWING;
+                        break;
+                    case 8:
+                        position = Position.DEFENCE;
+                        break;
+                    case 16:
+                        position = Position.GOALIE;
+                        break;
+                }
+                if (position == Position.GOALIE) {
+                    //get goalie stats
+                    int sk = rs.getInt("CK");
+                    int en = rs.getInt("FG");
+                    int si = rs.getInt("DI");
+                    int ag = rs.getInt("SK");
+                    int rc = rs.getInt("ST");
+                    int sc = rs.getInt("EN");
+                    int hs = rs.getInt("PH");
+                    int ph = rs.getInt("FO");
+                    int ps = rs.getInt("PA");
+                    //create player
+                    GoalieStats newStats = new GoalieStats(sk, en, si, ag, rc, sc, hs, ph, ps);
+                    Player newPlayer = new Goalie(newPlayerDetails, newStats);
+                    playerList.put(newPlayer.getPlayerName(), newPlayer);
+                } else {
+                    //ger skater stats
+                    int ck = rs.getInt("CK");
+                    int fg = rs.getInt("FG");
+                    int di = rs.getInt("DI");
+                    int sk = rs.getInt("SK");
+                    int st = rs.getInt("ST");
+                    int en = rs.getInt("EN");
+                    int ph = rs.getInt("PH");
+                    int fo = rs.getInt("FO");
+                    int pa = rs.getInt("PA");
+                    int sc = rs.getInt("SC");
+                    int df = rs.getInt("DF");
+                    int ps = rs.getInt("PS");
+                    //create player
+                    SkaterStats newStats = new SkaterStats(ck, fg, di, sk, st, en, ph, fo, pa, sc, df, ps);
+                    Player newPlayer = new Skater(newPlayerDetails, position, newStats);
+                    playerList.put(newPlayer.getPlayerName(), newPlayer);
                 }
             }
         }
-        catch (java.io.FileNotFoundException e){
-
+        catch (SQLException ex){
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
         }
-        catch (java.io.IOException e){
-
-        }
-
         return playerList;
     }
 
     private HashMap<Line,ArrayList<Player>> loadLines(Team load, HashMap<String, Player> playerList){
         HashMap<Line,ArrayList<Player>> lineList = new HashMap<>();
-
         return lineList;
     }
 
-   // public String getPlayers(Team team){
-
-        //return teamList;
-    }
+   public String listAllPlayers() {
+       String playerList = "";
+       playerList = "Home Team: " + homeTeam.name()+"\n";
+       Iterator<Map.Entry<String, Player>> it1 = homePlayers.entrySet().iterator();
+       while (it1.hasNext()) {
+           Map.Entry<String, Player> pair = it1.next();
+           playerList += pair.getValue().toString() +"\n";
+       }
+       playerList += "\nAway Team: " +awayTeam.name()+"\n";
+       Iterator<Map.Entry<String, Player>> it2 = awayPlayers.entrySet().iterator();
+       while (it2.hasNext()) {
+           Map.Entry<String, Player> pair = it2.next();
+           playerList += pair.getValue().toString()+"\n";
+       }
+       return playerList;
+   }
 }
