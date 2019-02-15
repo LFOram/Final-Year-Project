@@ -4,15 +4,14 @@ package Project.Base;
  * Created by Leon on 04/12/2018.
  */
 public class PlayerDetails {
-    private String Name;
-    private Position position;
-    private String number;
-    private String Height;
-    private String weight;
-    private String birthplace;
+    protected String name;
+    protected String number;
+    protected int Height;
+    protected int weight;
+    protected String birthplace;
 
-    public PlayerDetails(String Name, String number, String height, String weight, String birthplace) {
-        this.Name = Name;
+    public PlayerDetails(String Name, String number, int height, int weight, String birthplace) {
+        this.name = Name;
         this.number = number;
         Height = height;
         this.weight = weight;
