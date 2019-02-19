@@ -1,14 +1,15 @@
 package Project.GUI;
 
-import Project.Base.Stat;
-import Project.GUI.GUITest2;
-import Project.GUI.ImageLoader;
+import Project.Base.Database;
+import Project.GUI.Entities.Player.Player;
+import Project.Base.Team;
 import Project.States.SimState;
 import Project.States.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 public class Sim implements Runnable{
     private GUITest2 display;
@@ -39,10 +40,13 @@ public class Sim implements Runnable{
     private void init(){
         display = new GUITest2();
         Assets.init();
-        test = ImageLoader.loadImage("/IceRinkV1.png");
-        test2 = ImageLoader.loadImage("/SpritesheetV2.png");
-        test3 = ImageLoader.loadImage("/NumTest.png");
-        sheet = new SpriteSheet(ImageLoader.loadImage("/Sheet.png"));
+        Database.init();
+        //test = ImageLoader.loadImage("/IceRinkV1.png");
+        //test2 = ImageLoader.loadImage("/SpritesheetHomeTeams.png");
+        //test3 = ImageLoader.loadImage("/NumTest.png");
+        //sheet = new SpriteSheet(ImageLoader.loadImage("/Sheet.png"));
+        Assets.loadTeamAssets(Team.TOR,Team.SFP);
+        HashMap<String, Player> Team1 =  Database.loadTeam(Team.TOR,true);
 
         simState = new SimState();
         State.setState(simState);
@@ -81,7 +85,7 @@ public class Sim implements Runnable{
         init();
 
         //Set game frame rate
-        int fps = 60;
+        int fps = 20;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
         long now;
@@ -93,10 +97,10 @@ public class Sim implements Runnable{
             delta += (now-lastTime)/timePerTick;
             lastTime = now;
 
-
             if (delta >= 1) {
                 update();
                 render();
+                delta--;
             }
         }
     }

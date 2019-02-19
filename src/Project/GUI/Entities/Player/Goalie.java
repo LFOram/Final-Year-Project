@@ -1,15 +1,18 @@
-package Project.Base;
+package Project.GUI.Entities.Player;
+
+import Project.Base.Position;
+import Project.Base.Team;
 
 /**
  * Created by Leon on 02/12/2018.
  */
-public class Goalie extends Player{
+public class Goalie extends Player {
 
     private Position position = Position.GOALIE;
     private GoalieStats stats;
 
-    public Goalie(PlayerDetails player,GoalieStats stats) {
-        super(player);
+    public Goalie(PlayerDetails player, GoalieStats stats, Team team, Boolean home) {
+        super(player,team,home);
         this.stats = stats;
     }
 

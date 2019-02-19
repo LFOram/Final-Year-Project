@@ -1,9 +1,11 @@
-package Project.Base;
+package Project.GUI.Entities.Player;
+
+import Project.Base.Stats;
 
 /**
  * Created by Leon on 04/12/2018.
  */
-public class GoalieStats extends Stats{
+public class GoalieStats extends Stats {
     private int statSkating;
     private int statEndurance;
     private int statSize;

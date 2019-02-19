@@ -1,4 +1,4 @@
-package Project.Base;
+package Project.GUI.Entities.Player;
 
 /**
  * Created by Leon on 04/12/2018.

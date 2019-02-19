@@ -1,6 +1,8 @@
 package Project;
 
 
+import Project.GUI.Assets;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,9 +21,7 @@ public class Circle {
     }
 
     private void loadImage(String team){
-        String file = "Final Year Project/"+team+"Circle.png";
-        ImageIcon ii = new ImageIcon(file);
-        image = ii.getImage();
+
 
         w = image.getWidth(null);
         h = image.getHeight(null);

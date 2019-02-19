@@ -19,7 +19,7 @@ public class Sprite {
         visible = true;
     }
 
-    protected void loadImage(String file) {
+    public void loadImage(String file) {
         ImageIcon ii = new ImageIcon(file);
         image = ii.getImage();
     }

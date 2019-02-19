@@ -1,4 +1,6 @@
-package Project.Base;
+package Project.GUI.Entities.Player;
+
+import Project.Base.Stats;
 
 /**
  * Created by Leon on 04/12/2018.
@@ -78,5 +80,12 @@ public class SkaterStats extends Stats {
 
     public int getStatPenaltyShot() {
         return statPenaltyShot;
+    }
+
+    public String toString(){
+        String string ="";
+        string += " SK:"+statChecking+" FI:"+statFighting+" DI:"+statDiscipline+ " SK:"+statSkating+" ST:"+statStrength+" EN:"+statEndurance;
+        string += " PH:"+statPuckHandling+" FO:"+statFaceOffs+" PA:"+statPassing+" SC:"+statScoring+" DF:"+statDefence+" PS:"+statPenaltyShot;
+        return string;
     }
 }
