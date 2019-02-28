@@ -1,4 +1,4 @@
-package Project.GUI;
+package Project.GUI.Assets;
 
 import java.awt.image.BufferedImage;
 

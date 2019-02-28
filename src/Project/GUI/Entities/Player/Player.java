@@ -1,18 +1,20 @@
 package Project.GUI.Entities.Player;
 
 import Project.Base.Team;
-import Project.GUI.Assets;
+import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Entity;
-import Project.GUI.Sprite;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
 
 /**
  * Created by Leon on 02/12/2018.
  */
-public class Player extends Entity {
+public abstract class Player extends Entity implements PropertyChangeListener {
     private PlayerDetails player;
 
     private Point icePosition = new Point(); //x,y representation of position on ice (defaults to 0,0)
@@ -21,6 +23,7 @@ public class Player extends Entity {
     private Boolean homeTeam;
     private int delta = 5;
     private int numberOffset;
+    private int lastTouch;
 
 
     public BufferedImage circle;
@@ -81,15 +84,23 @@ public class Player extends Entity {
 
     }
 
+    public void setLastTouch(int touch){
+        this.lastTouch = touch;
+    }
+
+    //observer pattern listener
+    public void propertyChange(PropertyChangeEvent evt){
+        this.setLastTouch((int)evt.getNewValue());
+    }
 
 
     @Override
     public void tick() {
         if (x>1107){
-            delta = -3;
+            delta = -5;
         }
         else if (x<105){
-            delta = 3;
+            delta = 5;
         }
         x += delta;
     }

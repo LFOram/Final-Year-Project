@@ -1,6 +1,8 @@
 package Project.GUI;
 
 import Project.Base.Database;
+import Project.GUI.Assets.Assets;
+import Project.GUI.Assets.SpriteSheet;
 import Project.GUI.Entities.Player.Player;
 import Project.Base.Team;
 import Project.States.SimState;
@@ -85,11 +87,13 @@ public class Sim implements Runnable{
         init();
 
         //Set game frame rate
-        int fps = 20;
+        int fps = 30;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
         long now;
         long lastTime = System.nanoTime();
+
+
 
         //GAME LOOP!
         while (running){

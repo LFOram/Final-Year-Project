@@ -1,4 +1,4 @@
-package Project.GUI;
+package Project.GUI.Assets;
 
 import Project.Base.Database;
 import Project.Base.Team;
