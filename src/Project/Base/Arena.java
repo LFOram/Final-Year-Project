@@ -8,22 +8,22 @@ public class Arena {
 
     //Fields
     //boarders of rink
-    public int xFullMin = 104;
-    public int yFullMin =52;
-    public int xFullMax = xFullMin + 1003;
-    public int yFullMax = yFullMin + 428;
+    private static int xFullMin = 104;
+    private static int yFullMin =52;
+    private static int xFullMax = xFullMin + 1003;
+    private static int yFullMax = yFullMin + 428;
 
-    public int xLimitMax = xFullMax - 64;
-    public int xLimitMin = xFullMin + 64;
+    private static int xLimitMax = xFullMax - 64;
+    private static int xLimitMin = xFullMin + 64;
 
-    public int yLimitMax = yFullMax - 64;
-    public int yLimitMin = yFullMin + 64;
+    private static int yLimitMax = yFullMax - 64;
+    private static int yLimitMin = yFullMin + 64;
 
 
     private Arena() {
     }
 
-    public boolean onIce(float x,float y){
+    public static boolean onIce(float x,float y){
         //calculate x
         if(x<xFullMin || x>xFullMax ){//outside full rink on x
             System.out.println("outside full rink on x");
@@ -65,6 +65,88 @@ public class Arena {
         }
         //not in corner
         return true;
+    }
+    public int getHalf(boolean home,float x){
+        if(home){
+            if(x <= 605){
+                return 1;
+            }
+            else return 2;
+        }
+        else{
+            if (x <= 605){
+                return 2;
+            }
+            else return 2;
+        }
+    }
+
+    private int getXZone(float x){
+        if(x<125){
+            return 1;
+        }
+        else if(x<240){
+            return 2;
+        }
+        else if(x<350){
+            return 3;
+        }
+        else if(x<455){
+            return 4;
+        }
+        else {
+            return 5;
+        }
+    }
+
+    public int getZone(float x, float y){
+        x = Math.abs((x-104) - 605);
+        y = y-52;
+
+        int xZone = getXZone(x);
+        if (y<160){//Zone 1-5
+            switch (xZone){
+                case 1:
+                    return 1;
+                case 2:
+                    return 2;
+                case 3:
+                    return 3;
+                case 4:
+                    return 4;
+                case 5:
+                    return 5;
+            }
+        }
+        if(y<265){//Zone 6-10
+            switch (xZone){
+                case 1:
+                    return 6;
+                case 2:
+                    return 7;
+                case 3:
+                    return 8;
+                case 4:
+                    return 9;
+                case 5:
+                    return 10;
+            }
+        }
+        else{//Zone 11-15
+            switch (xZone){
+                case 1:
+                    return 11;
+                case 2:
+                    return 12;
+                case 3:
+                    return 13;
+                case 4:
+                    return 14;
+                case 5:
+                    return 15;
+            }
+        }
+        return 0;
     }
 
     public static Arena getArena() {

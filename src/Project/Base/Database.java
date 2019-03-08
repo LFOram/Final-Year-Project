@@ -1,5 +1,8 @@
 package Project.Base;
 
+import Project.Base.Enums.Line;
+import Project.Base.Enums.Position;
+import Project.Base.Enums.Team;
 import Project.GUI.Entities.Player.*;
 
 import java.sql.*;
@@ -40,7 +43,6 @@ public class Database {
     public static int[] getTeamPosition(Team team){
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT XPos,YPos FROM Teams WHERE Team = ?");
-            System.out.println(team.name());
             ps.setString(1,team.name());
             ResultSet rs = executeSQL(ps);
             int xPos = 0;
@@ -111,6 +113,7 @@ public class Database {
                     //create player
                     GoalieStats newStats = new GoalieStats(sk, en, si, ag, rc, sc, hs, ph, ps);
                     Player newPlayer = new Goalie(newPlayerDetails, newStats,team,home);
+                    newPlayer.setHomeTeam(home);
                     playerList.put(newPlayer.getPlayerName(), newPlayer);
                 } else {
                     //ger skater stats
@@ -129,6 +132,7 @@ public class Database {
                     //create player
                     SkaterStats newStats = new SkaterStats(ck, fg, di, sk, st, en, ph, fo, pa, sc, df, ps);
                     Player newPlayer = new Skater(newPlayerDetails, position, newStats,team,home);
+                    newPlayer.setHomeTeam(home);
                     playerList.put(newPlayer.getPlayerName(), newPlayer);
                 }
             }
@@ -151,6 +155,29 @@ public class Database {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public static HashMap<String, Player> loadLines (HashMap<String, Player> TeamPlayers, Team team, Line line){
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM `lines` WHERE Team = ? && Line = ?");
+            ps.setString(1,team.name());
+            ps.setString(2,line.name());
+            ResultSet rs = executeSQL(ps);
+            //System.out.println(rs.toString());
+            HashMap<String, Player> teamLine = new HashMap<>(5);
+            while (rs.next()) {
+                String playerName = rs.getString("PlayerName");
+                if (TeamPlayers.containsKey(playerName)) {
+                    Player player = TeamPlayers.get(playerName);
+                    player.setCurrentPlayingPosition(Position.valueOf(rs.getString("Position")));
+                    teamLine.put(player.getPlayerName(), player);
+                }
+            }
+            return teamLine;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

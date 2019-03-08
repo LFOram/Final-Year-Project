@@ -1,4 +1,4 @@
-package Project.Base;
+package Project.Base.Enums;
 
 /**
  * Created by Leon on 02/12/2018.

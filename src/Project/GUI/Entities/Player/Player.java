@@ -1,6 +1,7 @@
 package Project.GUI.Entities.Player;
 
-import Project.Base.Team;
+import Project.Base.Enums.Position;
+import Project.Base.Enums.Team;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Entity;
 
@@ -9,6 +10,9 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 
 /**
@@ -24,6 +28,13 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private int delta = 5;
     private int numberOffset;
     private int lastTouch;
+    protected float velocity;
+    protected Position currentPosition;
+    protected float targetX,targetY;
+    protected float targetDirection;
+    protected int currentEndurance = 100;
+
+
 
 
     public BufferedImage circle;
@@ -37,24 +48,44 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         this.team = team;
         this.homeTeam = home;
         createCircle();
-
-
-
     }
 
     public void setX(int x){
         this.x = x;
     }
+    public void setY(int y){this.y = y;}
+
     public void setHomeTeam(Boolean home){
         this.homeTeam = home;
+    }
 
+    public void setCurrentPosition(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
+    public void setTargetPositionAbsolute(float x, float y){
+        this.targetX = x;
+        this.targetY = y;
+    }
+
+    public void setTargetPositionRelative(float x, float y, Boolean home){
+        if(home){
+            this.targetX = x+595;
+            this.targetY = y;
+        }
+        else {
+            this.targetX = 595 - x;
+            this.targetY = y;
+        }
     }
 
     public String getPlayerName(){
         return player.name;
     }
 
-
+    public Position getCurrentPosition(){
+        return currentPosition;
+    }
 
     private void createCircle(){
         if (homeTeam){
@@ -71,6 +102,9 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private void setCircleNumber(ArrayList<BufferedImage> numbers){
         if (player.number.length()==1){
             numberOffset = 7;
+            //System.out.println(player.name);
+            //System.out.println(player.number);
+            //System.out.println(numbers.toString());
             circleNumber = numbers.get(Integer.parseInt(player.number));
         }
         else {
@@ -84,6 +118,8 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     }
 
+
+
     public void setLastTouch(int touch){
         this.lastTouch = touch;
     }
@@ -93,16 +129,13 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         this.setLastTouch((int)evt.getNewValue());
     }
 
+    public void setCurrentPlayingPosition(Position position){
+        this.currentPosition = position;
+    }
 
     @Override
     public void tick() {
-        if (x>1107){
-            delta = -5;
-        }
-        else if (x<105){
-            delta = 5;
-        }
-        x += delta;
+
     }
 
     @Override

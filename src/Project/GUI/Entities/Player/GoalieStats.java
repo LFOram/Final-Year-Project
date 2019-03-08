@@ -6,15 +6,15 @@ import Project.Base.Stats;
  * Created by Leon on 04/12/2018.
  */
 public class GoalieStats extends Stats {
-    private int statSkating;
-    private int statEndurance;
-    private int statSize;
-    private int statAgility;
-    private int statReboundControl;
-    private int statStyleControl;
-    private int statHandSpeed;
-    private int statPuckHandling;
-    private int statPenaltyShot;
+    protected int statSkating;
+    protected int statEndurance;
+    protected int statSize;
+    protected int statAgility;
+    protected int statReboundControl;
+    protected int statStyleControl;
+    protected int statHandSpeed;
+    protected int statPuckHandling;
+    protected int statPenaltyShot;
 
     public GoalieStats(int statSkating, int statEndurance, int statSize, int statAgility, int statReboundControl, int statStyleControl, int statHandSpeed, int statPuckHandling, int statPenaltyShot) {
         this.statSkating = statSkating;

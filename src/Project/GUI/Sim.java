@@ -1,10 +1,11 @@
 package Project.GUI;
 
 import Project.Base.Database;
+import Project.Base.Game;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Assets.SpriteSheet;
 import Project.GUI.Entities.Player.Player;
-import Project.Base.Team;
+import Project.Base.Enums.Team;
 import Project.States.SimState;
 import Project.States.State;
 
@@ -14,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 public class Sim implements Runnable{
+
     private GUITest2 display;
 
     private Thread thread;
@@ -35,6 +37,8 @@ public class Sim implements Runnable{
     //States
     private State simState;
 
+    //Game Teams
+
     public Sim(){
 
     }
@@ -47,12 +51,16 @@ public class Sim implements Runnable{
         //test2 = ImageLoader.loadImage("/SpritesheetHomeTeams.png");
         //test3 = ImageLoader.loadImage("/NumTest.png");
         //sheet = new SpriteSheet(ImageLoader.loadImage("/Sheet.png"));
-        Assets.loadTeamAssets(Team.TOR,Team.SFP);
-        HashMap<String, Player> Team1 =  Database.loadTeam(Team.TOR,true);
+        //Start Game
 
+
+        //HashMap<String, Player> Team1 =  Database.loadTeam(Team.TOR,true);
+
+        simState = new SimState();
         simState = new SimState();
         State.setState(simState);
     }
+
 
     private void update(){
         if(State.getState() != null){
@@ -87,7 +95,7 @@ public class Sim implements Runnable{
         init();
 
         //Set game frame rate
-        int fps = 30;
+        int fps = 15;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
         long now;

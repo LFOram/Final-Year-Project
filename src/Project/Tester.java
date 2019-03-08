@@ -1,7 +1,7 @@
 package Project;
 
 import Project.Base.Game;
-import Project.Base.Team;
+import Project.Base.Enums.Team;
 
 
 /**

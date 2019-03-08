@@ -1,4 +1,4 @@
-package Project.Base;
+package Project.Base.Enums;
 
 /**
  * Created by Leon on 02/12/2018.
@@ -8,7 +8,10 @@ public enum Position {
     CENTER ("C"),
     RWING ("RW"),
     DEFENCE("D"),
-    GOALIE ("G") ;
+    LDEFENCE("D"),
+    RDEFENCE("D"),
+    GOALIE ("G"),
+    BENCH ("Bench");
 
     private String value;
 

@@ -1,7 +1,7 @@
 package Project.GUI.Assets;
 
 import Project.Base.Database;
-import Project.Base.Team;
+import Project.Base.Enums.Team;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
