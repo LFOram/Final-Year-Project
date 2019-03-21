@@ -19,6 +19,10 @@ public class Puck extends Entity {
 
     public Puck() {
         super(607, 254);
+        bounds.x = 0;
+        bounds.y=0;
+        bounds.width=5;
+        bounds.width=5;
     }
 
 
@@ -37,27 +41,17 @@ public class Puck extends Entity {
         this.lastTouch = touch;
     }
 
+    public void setPositionRelative(float x,float y){
+        this.x = 602 + x;
+        this.y =y;
+    }
+
     @Override
     public void tick() {
-        if(!arena.onIce(x+3,y+3)){
-            direction = -direction;
-        }
-        deltay = rand.nextInt(5);
-        deltax = rand.nextInt(5);
-        if (direction == 1) {
-            x += deltax;
-            y += deltay;
-        }
-        else{
-            x -= deltax;
-            y -= deltay;
-        }
-
     }
 
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.puck,(int) x,(int) y,null);
-
     }
 }

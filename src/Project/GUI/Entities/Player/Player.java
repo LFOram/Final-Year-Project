@@ -11,10 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
-
 /**
  * Created by Leon on 02/12/2018.
  */
@@ -37,6 +33,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
 
 
+
     public BufferedImage circle;
     private BufferedImage circleNumber;
 
@@ -48,6 +45,11 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         this.team = team;
         this.homeTeam = home;
         createCircle();
+        bounds.x = 0;
+        bounds.y=0;
+        bounds.width=21;
+        bounds.height=21;
+
     }
 
     public void setX(int x){
@@ -102,9 +104,9 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private void setCircleNumber(ArrayList<BufferedImage> numbers){
         if (player.number.length()==1){
             numberOffset = 7;
-            //System.out.println(player.name);
-            //System.out.println(player.number);
-            //System.out.println(numbers.toString());
+            System.out.println(player.name);
+            System.out.println(player.number);
+            System.out.println(numbers.toString());
             circleNumber = numbers.get(Integer.parseInt(player.number));
         }
         else {
@@ -142,6 +144,8 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     public void render(Graphics g) {
         g.drawImage(circle,(int)x,(int)y,null);
         g.drawImage(circleNumber,(int)x+numberOffset,(int)y+6,null);
+        g.setColor(Color.RED);
+        g.fillRect((int)(x+bounds.x),(int) (y+bounds.y),(int) bounds.width,(int)bounds.height);
     }
 
     public String toString(){

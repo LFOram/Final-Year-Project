@@ -1,12 +1,10 @@
 package Project.Base;
 
-import Project.Base.Enums.Line;
 import Project.Base.Enums.Team;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Player.Player;
-
+import Project.GUI.Entities.Puck;
 import java.util.*;
-import java.sql.Connection;
 
 /**
  * Created by Leon on 16/01/2019.
@@ -15,11 +13,14 @@ public class Game {
     //Fields
     private TeamObject homeTeam;
     private TeamObject awayTeam;
+    private Arena arena = Arena.getArena();
+    public Puck puck = new Puck();
 
 
 
     public Game(Team home, Team away){
-        new Assets();
+        Assets.init();
+        Database.init();
         Assets.loadTeamAssets(home,away);
         homeTeam = new TeamObject(home,true);
         awayTeam = new TeamObject(away, false);
