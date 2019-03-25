@@ -32,9 +32,4 @@ public class Positions {
         return position;
     }
 
-    public static float[] puckCenterFaceoff(){
-        float[] position=new float[]{0,262};
-        return position;
-    }
-
 }

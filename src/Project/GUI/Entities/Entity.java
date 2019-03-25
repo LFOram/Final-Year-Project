@@ -4,13 +4,10 @@ import java.awt.*;
 
 public abstract class Entity {
     protected float x,y;
-    protected Rectangle bounds;
 
     public Entity(float x,float y){
         this.x = x;
         this.y = y;
-
-        bounds = new Rectangle(0,0,11,11);
     }
 
     public abstract void tick();

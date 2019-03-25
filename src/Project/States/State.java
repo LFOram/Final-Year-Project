@@ -1,6 +1,5 @@
 package Project.States;
 
-import Project.Base.Handler;
 import java.awt.*;
 
 public abstract class State {
@@ -13,12 +12,6 @@ public abstract class State {
 
     public static State getState(){
         return currentState;
-    }
-
-    protected Handler handler;
-
-    public State(Handler handler){
-        this.handler = handler;
     }
 
     public abstract void update();
