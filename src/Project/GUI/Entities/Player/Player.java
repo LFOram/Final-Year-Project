@@ -21,16 +21,13 @@ import static java.lang.Math.sin;
 public abstract class Player extends Entity implements PropertyChangeListener {
     private PlayerDetails player;
 
-    private Point icePosition = new Point(); //x,y representation of position on ice (defaults to 0,0)
     private Boolean onIce = false;
     private Team team;
     private Boolean homeTeam;
     private int delta = 5;
     private int numberOffset;
     private int lastTouch;
-    protected float velocity;
-    protected Position currentPosition;
-    protected float targetX,targetY;
+
     protected float targetDirection;
     protected int currentEndurance = 100;
 
@@ -68,16 +65,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         this.targetY = y;
     }
 
-    public void setTargetPositionRelative(float x, float y, Boolean home){
-        if(home){
-            this.targetX = x+595;
-            this.targetY = y;
-        }
-        else {
-            this.targetX = 595 - x;
-            this.targetY = y;
-        }
-    }
+
 
     public String getPlayerName(){
         return player.name;
@@ -118,6 +106,11 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     }
 
+//    public ArrayList<Player> getTeamPosition(){
+//
+//        return ;
+//    }
+
 
 
     public void setLastTouch(int touch){
@@ -131,6 +124,13 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     public void setCurrentPlayingPosition(Position position){
         this.currentPosition = position;
+    }
+
+    protected float getDirection(){
+        var deltaX = targetX - x;
+        var deltaY = targetY - y;
+        var rad = Math.atan2(deltaY,deltaX);
+        return (float) rad;
     }
 
     @Override

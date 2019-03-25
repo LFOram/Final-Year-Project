@@ -8,6 +8,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Random;
 
+import static java.lang.Math.*;
+
 public class Puck extends Entity {
     private PropertyChangeSupport support;
     private int lastTouch;
@@ -35,6 +37,28 @@ public class Puck extends Entity {
     public void setLastTouch(int touch){
         support.firePropertyChange("lastTouch",this.lastTouch,touch);
         this.lastTouch = touch;
+    }
+
+
+
+    private void move(float angle) {
+        int speed = 10;
+        float accel = 2;
+        float decel = 0.75f;
+
+        float deltaX = targetX - x;
+        float deltaY = targetY - y;
+        float distance = (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        float decelDistance = (float) Math.pow(velocity,2) / (2 * decel);
+
+        if (distance > decelDistance){//still accelerating if possible
+            velocity = Math.min(velocity+accel,speed);
+        }
+        else {
+            velocity = Math.max(velocity-decel,0);
+        }
+        x += velocity * cos(angle);
+        y += velocity * sin(angle);
     }
 
     @Override

@@ -2,6 +2,7 @@ package Project.GUI;
 
 import Project.Base.Database;
 import Project.Base.Game;
+import Project.Base.Handler;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Assets.SpriteSheet;
 import Project.GUI.Entities.Player.Player;
@@ -28,14 +29,12 @@ public class Sim implements Runnable{
     private BufferStrategy bs;
     private Graphics g;
 
-    private SpriteSheet sheet;
-    private BufferedImage test;
-
-    private BufferedImage test2;
-    private BufferedImage test3;
+    private Game game;
 
     //States
     private State simState;
+    private Handler handler;
+
 
     //Game Teams
 
@@ -47,17 +46,13 @@ public class Sim implements Runnable{
         display = new GUITest2();
         Assets.init();
         Database.init();
-        //test = ImageLoader.loadImage("/IceRinkV1.png");
-        //test2 = ImageLoader.loadImage("/SpritesheetHomeTeams.png");
-        //test3 = ImageLoader.loadImage("/NumTest.png");
-        //sheet = new SpriteSheet(ImageLoader.loadImage("/Sheet.png"));
+        handler = new Handler(this);
         //Start Game
+        game = new Game(Team.TOR,Team.SFP);
 
 
-        //HashMap<String, Player> Team1 =  Database.loadTeam(Team.TOR,true);
-
-        simState = new SimState();
-        simState = new SimState();
+        simState = new SimState(handler);
+        simState = new SimState(handler);
         State.setState(simState);
     }
 
@@ -83,12 +78,12 @@ public class Sim implements Runnable{
         if(State.getState()!= null){
             State.getState().render(g);
         }
-
-
-        //g.drawImage(sheet.crop(0,0,50,50),200,150,null);
-
         bs.show();
         g.dispose();
+    }
+
+    public Game getGame(){
+        return game;
     }
 
     public void run(){

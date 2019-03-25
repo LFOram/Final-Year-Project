@@ -4,6 +4,7 @@ import Project.Base.Enums.Line;
 import Project.Base.Enums.Team;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Player.Player;
+import Project.GUI.Entities.Puck;
 
 import java.util.*;
 import java.sql.Connection;
@@ -15,11 +16,14 @@ public class Game {
     //Fields
     private TeamObject homeTeam;
     private TeamObject awayTeam;
+    private Arena arena = Arena.getArena();
+    private Puck puck = new Puck();
+    private int homeScore = 0;
+    private int awayScore = 0;
 
 
 
     public Game(Team home, Team away){
-        new Assets();
         Assets.loadTeamAssets(home,away);
         homeTeam = new TeamObject(home,true);
         awayTeam = new TeamObject(away, false);
@@ -61,5 +65,9 @@ public class Game {
             playerList += pair.getValue().toString()+"\n";
         }
         return playerList;
+    }
+
+    public Puck getPuck(){
+        return puck;
     }
 }

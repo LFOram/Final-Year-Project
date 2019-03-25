@@ -18,14 +18,6 @@ public class Goalie extends Player {
         this.stats = stats;
     }
 
-    private float getDirection(){
-        var deltaX = targetX - x;
-        var deltaY = targetY - y;
-        var rad = Math.atan2(deltaY,deltaX);
-        //var deg = rad * (180/Math.PI);
-        return (float) rad;
-    }
-
 
     private void move(float angle) {
         int speed = ((stats.statSkating * stats.statEndurance) / currentEndurance) / 10;

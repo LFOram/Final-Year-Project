@@ -1,10 +1,12 @@
 package Project.States;
 
+import Project.Base.Handler;
+
 import java.awt.*;
 
 public class MenuState extends State{
-    public MenuState(){
-
+    public MenuState(Handler handler){
+        super(handler);
     }
 
     @Override

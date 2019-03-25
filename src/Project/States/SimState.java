@@ -1,11 +1,8 @@
 package Project.States;
 
-import Project.Base.Arena;
-import Project.Base.Database;
+import Project.Base.*;
 import Project.Base.Enums.Line;
 import Project.Base.Enums.Team;
-import Project.Base.Game;
-import Project.Base.Positions;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Player.Player;
 import Project.GUI.Entities.Puck;
@@ -20,49 +17,28 @@ public class SimState extends State {
     private HashMap<String, Player> playerList;
     private Player player1;
     private Player player2;
-    private Puck puck;
     private Arena a;
-    private Game game;
 
-    public SimState(){
+
+    public SimState(Handler handler){
+        super(handler);
         Assets.init();
         Database.init();
 
         a = Arena.getArena();
-        puck = new Puck();
-
-        game = new Game(Team.TOR,Team.SFP);
-        startGame();
-
-
-        //HashMap<String, Player> Team1 =  Database.loadTeam(Team.TOR,true);
-        //HashMap<String,Player> Team2 = Database.loadTeam(Team.SFP,false);
-
-    }
-
-    private void startGame(){
-        game.getHomeTeam().setLines(Line.FORWARD1,Line.DEFENCE1);
-        game.getHomeTeam().setCurrentGoalie(Line.GOALIE1);
-
-        game.getAwayTeam().setLines(Line.FORWARD1,Line.DEFENCE1);
-        game.getAwayTeam().setCurrentGoalie(Line.GOALIE1);
-
-        //set initial player positions
-
-
     }
 
 
 
     @Override
     public void update() {
-        for (Player player:game.getAwayTeam().getAllOnIce().values()) {
+        for (Player player:handler.getSim().getGame().getAwayTeam().getAllOnIce().values()) {
             player.tick();
         }
-        for (Player player:game.getHomeTeam().getAllOnIce().values()){
+        for (Player player:handler.getSim().getGame().getHomeTeam().getAllOnIce().values()){
             player.tick();
         }
-        puck.tick();
+        handler.getSim().getGame().getPuck().tick();
 
     }
 
@@ -70,13 +46,13 @@ public class SimState extends State {
     public void render(Graphics g) {
         g.drawImage(Assets.rink,0,0,null);
 
-        for (Player player:game.getAwayTeam().getAllOnIce().values()) {
+        for (Player player:handler.getSim().getGame().getAwayTeam().getAllOnIce().values()) {
             player.render(g);
         }
-        for (Player player:game.getHomeTeam().getAllOnIce().values()){
+        for (Player player:handler.getSim().getGame().getHomeTeam().getAllOnIce().values()){
             player.render(g);
         }
-        puck.render(g);
+        handler.getSim().getGame().getPuck().render(g);
 
 
         //g.drawImage(Assets.homeTeam,500,250,null);

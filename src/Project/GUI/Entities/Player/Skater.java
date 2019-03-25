@@ -25,14 +25,6 @@ public class Skater extends Player {
 
     }
 
-    private float getDirection(){
-        var deltaX = targetX - x;
-        var deltaY = targetY - y;
-        var rad = Math.atan2(deltaY,deltaX);
-        //var deg = rad * (180/Math.PI);
-        return (float) rad;
-    }
-
 
     private void move(float angle) {
         //System.out.println("Direction:" + angle);
@@ -45,20 +37,12 @@ public class Skater extends Player {
         float distance = (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
         float decelDistance = (float) Math.pow(velocity,2) / (2 * decel);
 
-        //System.out.println("Distance:" +distance);
-
         if (distance > decelDistance){//still accelerating if possible
             velocity = Math.min(velocity+accel,speed);
         }
         else {
-            //System.out.println("Decelerating");
             velocity = Math.max(velocity-decel,0);
         }
-
-        //System.out.println(velocity);
-        //System.out.println(cos(angle));
-        //System.out.println(velocity* cos(angle) + " " +velocity * sin(angle));
-
         x += velocity * cos(angle);
         y += velocity * sin(angle);
     }

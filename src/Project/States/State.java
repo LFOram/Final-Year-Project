@@ -1,8 +1,15 @@
 package Project.States;
 
+import Project.Base.Handler;
+
 import java.awt.*;
 
 public abstract class State {
+    protected Handler handler;
+
+    public State(Handler handler){
+        this.handler = handler;
+    }
 
     private static State currentState = null;
 
