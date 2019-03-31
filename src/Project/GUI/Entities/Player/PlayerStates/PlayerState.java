@@ -1,7 +1,7 @@
 package Project.GUI.Entities.Player.PlayerStates;
 
-interface PlayerState {
-    public void think();
+public interface PlayerState {
+    void think();
 
-    public void act();
+    void act();
 }

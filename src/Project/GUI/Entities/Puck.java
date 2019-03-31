@@ -1,6 +1,7 @@
 package Project.GUI.Entities;
 
 import Project.Base.Arena;
+import Project.Base.Enums.Possession;
 import Project.GUI.Assets.Assets;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ import static java.lang.Math.*;
 
 public class Puck extends Entity {
     private PropertyChangeSupport support;
-    private int lastTouch;
+    private Possession lastTouch;
     private int direction = 1;
     private int deltax = 6;
     private int deltay = 3;
@@ -34,7 +35,7 @@ public class Puck extends Entity {
     }
 
     //broadcast change
-    public void setLastTouch(int touch){
+    public void setLastTouch(Possession touch){
         support.firePropertyChange("lastTouch",this.lastTouch,touch);
         this.lastTouch = touch;
     }

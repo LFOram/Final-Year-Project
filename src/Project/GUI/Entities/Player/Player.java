@@ -1,15 +1,19 @@
 package Project.GUI.Entities.Player;
 
 import Project.Base.Enums.Position;
+import Project.Base.Enums.Possession;
 import Project.Base.Enums.Team;
+import Project.Base.Game;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Entity;
+import Project.GUI.Entities.Player.PlayerStates.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -22,14 +26,18 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private PlayerDetails player;
 
     private Boolean onIce = false;
-    private Team team;
-    private Boolean homeTeam;
-    private int delta = 5;
-    private int numberOffset;
-    private int lastTouch;
 
-    protected float targetDirection;
+    private Team team;
+
+    private Boolean homeTeam;
+    private int numberOffset;
+    private Boolean hasPuck;
+    private Possession lastTouch;
+    private Game game;
+
     protected int currentEndurance = 100;
+
+    private PlayerState playerState = null;
 
 
 
@@ -106,20 +114,62 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     }
 
-//    public ArrayList<Player> getTeamPosition(){
-//
-//        return ;
-//    }
+    public void setGame(Game game){
+        this.game = game;
+    }
 
 
+    public ArrayList<Player> getPositions(boolean home){
+        ArrayList<Player> allPlayers = new ArrayList<>();
+        if(home){
+            allPlayers.addAll(game.getHomeTeam().getAllOnIce().values());
+        }
+        else {
+            allPlayers.addAll(game.getAwayTeam().getAllOnIce().values());
+        }
+        allPlayers.remove(this);
+        return allPlayers;
+    }
 
-    public void setLastTouch(int touch){
+
+    private void setPlayerState(PlayerState state){
+        this.playerState = state;
+    }
+
+
+    public void setLastTouch(Possession touch){
         this.lastTouch = touch;
     }
 
     //observer pattern listener
     public void propertyChange(PropertyChangeEvent evt){
-        this.setLastTouch((int)evt.getNewValue());
+        this.setLastTouch((Possession) evt.getNewValue());
+        this.updateState();
+    }
+
+    private void updateState(){
+        if(hasPuck){
+            this.setPlayerState(new HasPuckPlayerState(this));
+        }
+        else {
+            if (lastTouch == Possession.FACEOFF) {
+                this.setPlayerState(new FaceoffPlayerState(this));
+            } else if (lastTouch == Possession.HOME){
+                if (homeTeam){
+                    this.setPlayerState(new AttackingPlayerState(this));
+                }
+                else {
+                    this.setPlayerState(new DefendingPlayerState(this));
+                }
+            } else if (lastTouch == Possession.AWAY) {
+                if (homeTeam){
+                    this.setPlayerState(new DefendingPlayerState(this));
+                }
+                else {
+                    this.setPlayerState(new AttackingPlayerState(this));
+                }
+            }
+        }
     }
 
     public void setCurrentPlayingPosition(Position position){
@@ -131,6 +181,14 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         var deltaY = targetY - y;
         var rad = Math.atan2(deltaY,deltaX);
         return (float) rad;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public boolean isHomeTeam(){
+        return homeTeam;
     }
 
     @Override

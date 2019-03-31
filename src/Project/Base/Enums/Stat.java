@@ -5,5 +5,5 @@ package Project.Base.Enums;
  */
 public enum Stat {
 SChecking, SFighting,SDiscipline,SSkating,SStrength,SEndurance,SPuckHandling,SFaceOffs,SPassing,SScoring,SDefence,SPenaltyShot,
-GSkating,GEndurance,GSize,GAgility,GReboundControl,GStyleControl,GHandSpeed,GPuckHandling,GPenaltyShot;
+GSkating,GEndurance,GSize,GAgility,GReboundControl,GStyleControl,GHandSpeed,GPuckHandling,GPenaltyShot
 }

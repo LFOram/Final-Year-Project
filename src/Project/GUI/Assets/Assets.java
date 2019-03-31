@@ -5,6 +5,7 @@ import Project.Base.Enums.Team;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Assets {
     public static BufferedImage rink;
@@ -39,7 +40,7 @@ public class Assets {
         BufferedImage image;
 
         position = Database.getTeamPosition(home);
-        homeTeam = homeSheet.crop((position[0]*width),(position[1]*height),width,height);
+        homeTeam = homeSheet.crop((Objects.requireNonNull(position)[0]*width),(position[1]*height),width,height);
         teamNo = Database.getTeamNumber(home);
         for (int i=0;i<10;i++){
             image = homeNumberSheet.crop(i*5,teamNo*9,5,9);
@@ -48,7 +49,7 @@ public class Assets {
 
         //Away team
         position = Database.getTeamPosition(away);
-        awayTeam = awaySheet.crop((position[0]*width),(position[1]*height),width,height);
+        awayTeam = awaySheet.crop((Objects.requireNonNull(position)[0]*width),(position[1]*height),width,height);
         teamNo = Database.getTeamNumber(away);
         for (int i=0;i<10;i++){
             image = awayNumberSheet.crop(i*5,teamNo*9,5,9);

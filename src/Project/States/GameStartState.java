@@ -31,7 +31,7 @@ public class GameStartState extends State {
     }
 
     public static void setInitialPosition(HashMap<String, Player> team, Boolean home) {
-        float[] position = new float[2];
+        float[] position;
         float i = 0;
         for(Player player: team.values()){
             position = Positions.getCenterFaceoff(player);

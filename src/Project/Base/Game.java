@@ -29,11 +29,18 @@ public class Game {
         awayTeam = new TeamObject(away, false);
         setInitialPosition(homeTeam.getAllOnIce(),true);
         setInitialPosition(awayTeam.getAllOnIce(),false);
-
+        for (Player player:homeTeam.getPlayerList().values()) {
+            player.setGame(this);
+        }
+        for (Player player:awayTeam.getPlayerList().values()) {
+            player.setGame(this);
+        }
     }
 
+
+
     public static void setInitialPosition(HashMap<String,Player> team,Boolean home) {
-        float[] position = new float[2];
+        float[] position;
         float i = 0;
         for(Player player: team.values()){
             position = Positions.getCenterFaceoff(player);
@@ -51,20 +58,19 @@ public class Game {
     }
 
     public String listAllPlayers() {
-        String playerList = "";
-        playerList = "Home Team: " + homeTeam.getTeam().name()+"\n";
+        StringBuilder playerList = new StringBuilder("Home Team: " + homeTeam.getTeam().name() + "\n");
         Iterator<Map.Entry<String, Player>> it1 = homeTeam.getPlayerList().entrySet().iterator();
         while (it1.hasNext()) {
             Map.Entry<String, Player> pair = it1.next();
-            playerList += pair.getValue().toString() +"\n";
+            playerList.append(pair.getValue().toString()).append("\n");
         }
-        playerList += "\nAway Team: " +awayTeam.getTeam().name()+"\n";
+        playerList.append("\nAway Team: ").append(awayTeam.getTeam().name()).append("\n");
         Iterator<Map.Entry<String, Player>> it2 = awayTeam.getPlayerList().entrySet().iterator();
         while (it2.hasNext()) {
             Map.Entry<String, Player> pair = it2.next();
-            playerList += pair.getValue().toString()+"\n";
+            playerList.append(pair.getValue().toString()).append("\n");
         }
-        return playerList;
+        return playerList.toString();
     }
 
     public Puck getPuck(){
