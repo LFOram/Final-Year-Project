@@ -23,9 +23,10 @@ public class Arena {
     private Arena() {
     }
 
-    public static boolean onIce(float x,float y){
+    public static boolean onIce(int x,int y){
         //calculate x
         if(x<xFullMin || x>xFullMax ){//outside full rink on x
+            System.out.println(x);
             System.out.println("outside full rink on x");
             return false;
         }
@@ -149,10 +150,36 @@ public class Arena {
         return 0;
     }
 
+    public Boolean legalMove(float tx1, float tx2, float ty1, float ty2){
+        if (onIce((int) tx1, (int)ty1)&& onIce((int) tx2, (int)ty1)&&onIce((int) tx1, (int)ty2)&&onIce((int) tx2, (int)ty2)){
+            return true;
+        }
+        else return false;
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return 1: y bounce, 2: x bounce, 3: corner bounce
+     */
+    public int getBounce(float x,float y){
+        if(x<xLimitMin || x>xLimitMax) {//could be in corners
+            if (y < yLimitMin || y > yLimitMax) {//in corner
+                return 3;
+            }
+            else {//x bounce
+                return 2;
+            }
+        }
+        else return 1;
+    }
+
     public static Arena getArena() {
         if(instance == null) {
             instance = new Arena();
         }
         return instance;
     }
+
 }

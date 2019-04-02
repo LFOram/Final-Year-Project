@@ -17,35 +17,36 @@ public class Game {
     private TeamObject homeTeam;
     private TeamObject awayTeam;
     private Arena arena = Arena.getArena();
-    private Puck puck = new Puck();
+    private Puck puck;
+    private int tickTimer = 0;
     private int homeScore = 0;
     private int awayScore = 0;
 
 
-
-    public Game(Team home, Team away){
-        Assets.loadTeamAssets(home,away);
-        homeTeam = new TeamObject(home,true);
+    public Game(Team home, Team away) {
+        Assets.loadTeamAssets(home, away);
+        homeTeam = new TeamObject(home, true);
         awayTeam = new TeamObject(away, false);
-        setInitialPosition(homeTeam.getAllOnIce(),true);
-        setInitialPosition(awayTeam.getAllOnIce(),false);
-        for (Player player:homeTeam.getPlayerList().values()) {
+        setInitialPosition(homeTeam.getAllOnIce(), true);
+        setInitialPosition(awayTeam.getAllOnIce(), false);
+        for (Player player : homeTeam.getPlayerList().values()) {
             player.setGame(this);
         }
-        for (Player player:awayTeam.getPlayerList().values()) {
+        for (Player player : awayTeam.getPlayerList().values()) {
             player.setGame(this);
         }
+        puck = new Puck(this);
+        puck.setSpeed(10);
     }
 
 
-
-    public static void setInitialPosition(HashMap<String,Player> team,Boolean home) {
+    public static void setInitialPosition(HashMap<String, Player> team, Boolean home) {
         float[] position;
         float i = 0;
-        for(Player player: team.values()){
+        for (Player player : team.values()) {
             position = Positions.getCenterFaceoff(player);
-            player.setCurrentPosition(600-(25-(10*i)),40);
-            player.setTargetPositionRelative(position[0],position[1],home);
+            player.setCurrentPosition(600 - (25 - (10 * i)), 60);
+            player.setTargetPositionRelative(position[0], position[1], home);
         }
     }
 
@@ -73,7 +74,11 @@ public class Game {
         return playerList.toString();
     }
 
-    public Puck getPuck(){
+    public Puck getPuck() {
         return puck;
+    }
+
+    public Arena getArena() {
+        return arena;
     }
 }

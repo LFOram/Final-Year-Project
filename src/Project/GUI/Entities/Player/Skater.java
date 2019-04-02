@@ -35,17 +35,31 @@ public class Skater extends Player {
         float deltaX = targetX - x;
         float deltaY = targetY - y;
         float distance = (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-        float decelDistance = (float) Math.pow(velocity,2) / (2 * decel);
+        float decelDistance = (float) Math.pow(xVelocity,2) / (2 * decel);
 
         if (distance > decelDistance){//still accelerating if possible
-            velocity = Math.min(velocity+accel,speed);
+            xVelocity = Math.min(xVelocity+accel,speed);
+            yVelocity = Math.min(yVelocity+accel,speed);
         }
         else {
-            velocity = Math.max(velocity-decel,0);
+            xVelocity = Math.max(xVelocity - decel, 0);
+            yVelocity = Math.max(yVelocity - decel, 0);
         }
-        x += velocity * cos(angle);
-        y += velocity * sin(angle);
+        float tx1 = (float) (x + xVelocity * cos(angle));
+        float tx2 = (float) (x + bounds.width + xVelocity * cos(angle));
+        float ty1 = (float) (y + yVelocity * sin(angle));
+        float ty2 = (float) (y + bounds.height + yVelocity * sin(angle));
+        if(getGame().getArena().legalMove(tx1,tx2,ty1,ty2)) {
+            x += xVelocity * cos(angle);
+            y += yVelocity * sin(angle);
+        }
+        else {
+            xVelocity = 0;
+            yVelocity = 0;
+        }
+
     }
+
 
     public String toString() {
         String string = position.toString() + " - " +  super.toString();
@@ -59,6 +73,7 @@ public class Skater extends Player {
             float direction = getDirection();
             move(direction);
         }
+        updateBounds(x,y);
     }
 
 

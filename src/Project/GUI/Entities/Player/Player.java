@@ -48,7 +48,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
 
     public Player(PlayerDetails player,Team team,Boolean home) {
-        super(400,250);
+        super(400,250,21,21);
         this.player = player;
         this.team = team;
         this.homeTeam = home;
@@ -116,6 +116,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     public void setGame(Game game){
         this.game = game;
+        game.getPuck().addPropertyChangeListener(this);
     }
 
 
@@ -200,6 +201,9 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     public void render(Graphics g) {
         g.drawImage(circle,(int)x,(int)y,null);
         g.drawImage(circleNumber,(int)x+numberOffset,(int)y+6,null);
+
+//        g.setColor(Color.red);
+//        g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
     }
 
     public String toString(){

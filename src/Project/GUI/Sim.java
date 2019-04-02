@@ -4,16 +4,13 @@ import Project.Base.Database;
 import Project.Base.Game;
 import Project.Base.Handler;
 import Project.GUI.Assets.Assets;
-import Project.GUI.Assets.SpriteSheet;
-import Project.GUI.Entities.Player.Player;
 import Project.Base.Enums.Team;
+import Project.States.GameStartState;
 import Project.States.SimState;
 import Project.States.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 public class Sim implements Runnable{
 
@@ -33,6 +30,7 @@ public class Sim implements Runnable{
 
     //States
     private State simState;
+    private State startState;
     private Handler handler;
 
 
@@ -51,9 +49,9 @@ public class Sim implements Runnable{
         game = new Game(Team.TOR,Team.SFP);
 
 
+        startState = new GameStartState(handler);
         simState = new SimState(handler);
-        simState = new SimState(handler);
-        State.setState(simState);
+        State.setState(startState);
     }
 
 
