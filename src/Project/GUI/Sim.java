@@ -29,8 +29,8 @@ public class Sim implements Runnable{
     private Game game;
 
     //States
-    private State simState;
-    private State startState;
+    public State simState;
+    public State startState;
     private Handler handler;
 
 
@@ -53,6 +53,7 @@ public class Sim implements Runnable{
         simState = new SimState(handler);
         State.setState(startState);
     }
+
 
 
     private void update(){

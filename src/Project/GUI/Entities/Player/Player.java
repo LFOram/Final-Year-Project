@@ -116,7 +116,8 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     public void setGame(Game game){
         this.game = game;
-        game.getPuck().addPropertyChangeListener(this);
+        System.out.println(this.game.toString());
+        this.game.getPuck().addPropertyChangeListener(this);
     }
 
 

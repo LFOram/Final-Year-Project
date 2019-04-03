@@ -35,7 +35,7 @@ public class GameStartState extends State {
         float i = 0;
         for(Player player: team.values()){
             position = Positions.getCenterFaceoff(player);
-            player.setCurrentPosition(600-(25-(10*i)),40);
+            player.setCurrentPosition(600-(25-(10*i)),60);
             player.setTargetPositionRelative(position[0],position[1],home);
             i++;
         }
@@ -56,7 +56,7 @@ public class GameStartState extends State {
         if (ticks>=250){
             float[] position = Positions.puckCenterFaceoff();
             handler.getSim().getGame().getPuck().setPositionRelative(position[0],position[1],false);
-            State.setState(simState);
+            State.setState(handler.getSim().simState);
         }
     }
 

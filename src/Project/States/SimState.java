@@ -1,8 +1,6 @@
 package Project.States;
 
 import Project.Base.*;
-import Project.Base.Enums.Line;
-import Project.Base.Enums.Team;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Player.Player;
 import Project.GUI.Entities.Puck;

@@ -25,6 +25,7 @@ public class Game {
 
     public Game(Team home, Team away) {
         Assets.loadTeamAssets(home, away);
+        puck = new Puck(this);
         homeTeam = new TeamObject(home, true);
         awayTeam = new TeamObject(away, false);
         setInitialPosition(homeTeam.getAllOnIce(), true);
@@ -35,7 +36,7 @@ public class Game {
         for (Player player : awayTeam.getPlayerList().values()) {
             player.setGame(this);
         }
-        puck = new Puck(this);
+
         puck.setSpeed(10);
     }
 
@@ -45,7 +46,7 @@ public class Game {
         float i = 0;
         for (Player player : team.values()) {
             position = Positions.getCenterFaceoff(player);
-            player.setCurrentPosition(600 - (25 - (10 * i)), 60);
+            player.setCurrentPosition(600 - (25 - (10 * i)), 100);
             player.setTargetPositionRelative(position[0], position[1], home);
         }
     }

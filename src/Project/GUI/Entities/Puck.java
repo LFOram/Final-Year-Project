@@ -16,7 +16,7 @@ import static java.lang.Math.*;
 
 public class Puck extends Entity {
 
-    private PropertyChangeSupport support;
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private Possession lastTouch;
     private int direction = 1;
     private float angle;
