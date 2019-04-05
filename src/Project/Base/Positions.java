@@ -2,7 +2,11 @@ package Project.Base;
 
 import Project.GUI.Entities.Player.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Positions {
+
     public static float[] getCenterFaceoff(Player player){
         float[] position = new float[2];
         switch (player.getCurrentPosition()){
@@ -38,5 +42,6 @@ public class Positions {
         position[1] = 255;
         return position;
     }
+
 
 }

@@ -1,10 +1,15 @@
 package Project.GUI.Entities;
 
 import Project.Base.Enums.Position;
+import Project.Base.Game;
+import Project.GUI.Entities.Player.Player;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class Entity {
+    protected Game game;
+
     protected float x,y;
     protected int width,height;
     protected float targetX,targetY;
@@ -24,6 +29,45 @@ public abstract class Entity {
         bounds.x = (int) x;
         bounds.y = (int) y;
     }
+
+    public Rectangle getCollisionBounds(float xOffset, float yOffset){
+        return new Rectangle((int)(bounds.x+xOffset),(int)(bounds.y+yOffset));
+    }
+
+    public boolean checkPlayerCollision(float xOffset, float yOffset){
+        for (Player p:game.getAllPlayers()){
+            if(p.equals(this)){
+                continue;
+            }
+            if (p.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset,yOffset))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Player getHittingPlayer(Player player,ArrayList<Player> playerArrayList,float xOffset, float yOffset){
+        for(Player p:playerArrayList){
+            if(p.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset,yOffset))){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public boolean playerPuckCollision(Player player){
+        if (player.getCollisionBounds(0f,0f).intersects(player.getGame().getPuck().getCollisionBounds(0f,0f))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    protected void move(){
+
+    }
+
 
     public void setTargetPositionRelative(float x, float y, Boolean home){
         if(home){
@@ -47,6 +91,13 @@ public abstract class Entity {
         }
     }
 
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
 
     public abstract void tick();
 

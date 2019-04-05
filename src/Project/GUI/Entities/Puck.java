@@ -20,7 +20,7 @@ public class Puck extends Entity {
     private Possession lastTouch;
     private int direction = 1;
     private float angle;
-    private Game game;
+
     public BufferedImage puck = Assets.puck;
     Arena arena = Arena.getArena();
     Random rand = new Random();
@@ -57,7 +57,7 @@ public class Puck extends Entity {
         this.angle = angle;
     }
 
-    private void move() {
+    private void movePuck() {
         float decel = 0.025f;
         if (xVelocity > 0.1) {
             if (xVelocity >= 0) {
@@ -98,9 +98,21 @@ public class Puck extends Entity {
         }
     }
 
+    public Possession getLastTouch(){
+        return lastTouch;
+    }
+
+    public int getZone(){
+        return arena.getThird(this);
+    }
+
+    public int getSpeed(){
+        return Math.abs((int)xVelocity);
+    }
+
     @Override
     public void tick() {
-        move();
+        movePuck();
         updateBounds(x,y);
     }
 

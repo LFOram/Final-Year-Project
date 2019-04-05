@@ -14,6 +14,16 @@ public class FaceoffPlayerState implements PlayerState{
 
 
     @Override
+    public void hit(float xOffset, float yOffset) {
+
+    }
+
+    @Override
+    public void pass() {
+
+    }
+
+    @Override
     public void think() {
         //get positions
         teamPlayers = player.getPositions(player.isHomeTeam());

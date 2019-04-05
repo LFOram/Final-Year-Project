@@ -2,6 +2,7 @@ package Project.GUI.Entities.Player;
 
 import Project.Base.Enums.Position;
 import Project.Base.Enums.Team;
+import Project.Base.Stats;
 
 import static java.lang.Math.*;
 
@@ -59,6 +60,11 @@ public class Goalie extends Player {
             }
 
         }
+    }
+
+    @Override
+    public Stats getStats() {
+        return stats;
     }
 
     public String toString(){

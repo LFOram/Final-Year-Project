@@ -4,6 +4,7 @@ import Project.Base.Enums.Position;
 import Project.Base.Enums.Possession;
 import Project.Base.Enums.Team;
 import Project.Base.Game;
+import Project.Base.Stats;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Entity;
 import Project.GUI.Entities.Player.PlayerStates.*;
@@ -13,11 +14,6 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 
 /**
  * Created by Leon on 02/12/2018.
@@ -33,19 +29,13 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private int numberOffset;
     private Boolean hasPuck;
     private Possession lastTouch;
-    private Game game;
 
     protected int currentEndurance = 100;
 
-    private PlayerState playerState = null;
-
-
-
+    protected PlayerState playerState = null;
 
     public BufferedImage circle;
     private BufferedImage circleNumber;
-
-
 
     public Player(PlayerDetails player,Team team,Boolean home) {
         super(400,250,21,21);
@@ -73,8 +63,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         this.targetY = y;
     }
 
-
-
     public String getPlayerName(){
         return player.name;
     }
@@ -87,7 +75,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         if (homeTeam){
             circle = Assets.homeTeam;
             setCircleNumber(Assets.homeNumbers);
-
         }
         else {
             circle = Assets.awayTeam;
@@ -111,7 +98,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
             circleNumber.createGraphics().drawImage(Assets.numberSpace,5,0,null);
             circleNumber.createGraphics().drawImage(numbers.get((Integer.parseInt(array[1]))),6,0,null);
         }
-
     }
 
     public void setGame(Game game){
@@ -134,7 +120,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     }
 
 
-    private void setPlayerState(PlayerState state){
+    protected void setPlayerState(PlayerState state){
         this.playerState = state;
     }
 
@@ -150,27 +136,31 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     }
 
     private void updateState(){
-        if(hasPuck){
-            this.setPlayerState(new HasPuckPlayerState(this));
-        }
-        else {
-            if (lastTouch == Possession.FACEOFF) {
-                this.setPlayerState(new FaceoffPlayerState(this));
-            } else if (lastTouch == Possession.HOME){
-                if (homeTeam){
-                    this.setPlayerState(new AttackingPlayerState(this));
-                }
-                else {
-                    this.setPlayerState(new DefendingPlayerState(this));
-                }
-            } else if (lastTouch == Possession.AWAY) {
-                if (homeTeam){
-                    this.setPlayerState(new DefendingPlayerState(this));
-                }
-                else {
-                    this.setPlayerState(new AttackingPlayerState(this));
+        if (this instanceof Skater) {
+            if(hasPuck){
+                this.setPlayerState(new HasPuckPlayerState(this));
+            }
+            else {
+                if (lastTouch == Possession.FACEOFF) {
+                    this.setPlayerState(new FaceoffPlayerState(this));
+                } else if (lastTouch == Possession.HOME){
+                    if (homeTeam){
+                        this.setPlayerState(new AttackingPlayerState((Skater)this));
+                    }
+                    else {
+                        this.setPlayerState(new DefendingPlayerState(this));
+                    }
+                } else if (lastTouch == Possession.AWAY) {
+                    if (homeTeam){
+                        this.setPlayerState(new DefendingPlayerState(this));
+                    }
+                    else {
+                        this.setPlayerState(new AttackingPlayerState((Skater)this));
+                    }
                 }
             }
+        } else {
+            //is goalie
         }
     }
 
@@ -185,12 +175,26 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         return (float) rad;
     }
 
+    public abstract Stats getStats();
+
     public Game getGame() {
         return game;
     }
 
     public boolean isHomeTeam(){
         return homeTeam;
+    }
+
+    public int getCurrentEndurance(){
+        return currentEndurance;
+    }
+
+    protected void setHasPuck(boolean hasPuck){
+        this.hasPuck = hasPuck;
+    }
+
+    public Boolean getHasPuck() {
+        return hasPuck;
     }
 
     @Override
@@ -202,7 +206,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     public void render(Graphics g) {
         g.drawImage(circle,(int)x,(int)y,null);
         g.drawImage(circleNumber,(int)x+numberOffset,(int)y+6,null);
-
 //        g.setColor(Color.red);
 //        g.fillRect(bounds.x,bounds.y,bounds.width,bounds.height);
     }

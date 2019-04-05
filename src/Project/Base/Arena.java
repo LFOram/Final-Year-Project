@@ -1,10 +1,33 @@
 package Project.Base;
 
+import Project.GUI.Entities.Entity;
+
+import java.util.HashMap;
+
 /**
  * Created by Leon on 16/01/2019.
  */
 public class Arena {
     private static Arena instance = null; //Class uses singleton pattern to ensure only one arena instance exists
+    private static HashMap<Integer,float[]> zonePositions;
+    static {
+        zonePositions = new HashMap<>();
+        zonePositions.put(1,new float[]{90f,107f});
+        zonePositions.put(2,new float[]{190f,107f});
+        zonePositions.put(3,new float[]{290f,107f});
+        zonePositions.put(4,new float[]{390f,107f});
+        zonePositions.put(5,new float[]{490f,107f});
+        zonePositions.put(6,new float[]{90f,214f});
+        zonePositions.put(7,new float[]{190f,214f});
+        zonePositions.put(8,new float[]{290f,214f});
+        zonePositions.put(9,new float[]{390f,214f});
+        zonePositions.put(10,new float[]{490f,214f});
+        zonePositions.put(12,new float[]{90f,321f});
+        zonePositions.put(12,new float[]{190f,321f});
+        zonePositions.put(13,new float[]{290f,321f});
+        zonePositions.put(14,new float[]{390f,321f});
+        zonePositions.put(15,new float[]{490f,321f});
+    }
 
     //Fields
     //boarders of rink
@@ -173,6 +196,23 @@ public class Arena {
             }
         }
         else return 1;
+    }
+
+    public  float[] getZonePosition(int zone){
+        return zonePositions.get(zone);
+    }
+
+    public int getThird(Entity entity){
+        if(entity.getX()<378){
+            return 1;
+        }
+        else if(entity.getX()< 628){
+            //neutral zone
+            return 2;
+        }
+        else{
+            return 3;
+        }
     }
 
     public static Arena getArena() {

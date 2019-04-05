@@ -6,18 +6,18 @@ import Project.Base.Stats;
  * Created by Leon on 04/12/2018.
  */
 public class SkaterStats extends Stats {
-    protected int statChecking;
-    protected int statFighting;
-    protected int statDiscipline;
-    protected int statSkating;
-    protected int statStrength;
-    protected int statEndurance;
-    protected int statPuckHandling;
-    protected int statFaceOffs;
-    protected int statPassing;
-    protected int statScoring;
-    protected int statDefence;
-    protected int statPenaltyShot;
+    private int statChecking;
+    private int statFighting;
+    private int statDiscipline;
+    private int statSkating;
+    private int statStrength;
+    private int statEndurance;
+    private int statPuckHandling;
+    private int statFaceOffs;
+    private int statPassing;
+    private int statScoring;
+    private int statDefence;
+    private int statPenaltyShot;
 
     public SkaterStats(int statChecking, int statFighting, int statDiscipline, int statSkating, int statStrength, int statEndurance, int statPuckHandling, int statFaceOffs, int statPassing, int statScoring, int statDefence, int statPenaltyShot) {
         this.statChecking = statChecking;
