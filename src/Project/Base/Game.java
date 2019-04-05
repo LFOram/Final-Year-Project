@@ -151,6 +151,13 @@ public class Game {
         return awayTeam;
     }
 
+    public ArrayList<Player> getBothTeamOnIce(){
+        ArrayList<Player> allOnIce = new ArrayList<>();
+        allOnIce.addAll(homeTeam.getAllOnIce().values());
+        allOnIce.addAll(awayTeam.getAllOnIce().values());
+        return allOnIce;
+    }
+
     public String listAllPlayers() {
         StringBuilder playerList = new StringBuilder("Home Team: " + homeTeam.getTeam().name() + "\n");
         Iterator<Map.Entry<String, Player>> it1 = homeTeam.getPlayerList().entrySet().iterator();

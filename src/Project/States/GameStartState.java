@@ -28,6 +28,8 @@ public class GameStartState extends State {
 
         setInitialPosition(handler.getSim().getGame().getHomeTeam().getAllOnIce(),true);
         setInitialPosition(handler.getSim().getGame().getAwayTeam().getAllOnIce(),false);
+
+        handler.getSim().setFaceoffState(0);
     }
 
     public static void setInitialPosition(HashMap<String, Player> team, Boolean home) {
@@ -45,19 +47,19 @@ public class GameStartState extends State {
 
     @Override
     public void update() {
-        for (Player player:handler.getSim().getGame().getAwayTeam().getAllOnIce().values()) {
-            player.tick();
-        }
-        for (Player player:handler.getSim().getGame().getHomeTeam().getAllOnIce().values()){
-            player.tick();
-        }
-        handler.getSim().getGame().getPuck().tick();
-        ticks += 1;
-        if (ticks>=250){
-            float[] position = Positions.puckCenterFaceoff();
-            handler.getSim().getGame().getPuck().setPositionRelative(position[0],position[1],false);
-            State.setState(handler.getSim().simState);
-        }
+//        for (Player player:handler.getSim().getGame().getAwayTeam().getAllOnIce().values()) {
+//            player.tick();
+//        }
+//        for (Player player:handler.getSim().getGame().getHomeTeam().getAllOnIce().values()){
+//            player.tick();
+//        }
+//        handler.getSim().getGame().getPuck().tick();
+//        ticks += 1;
+//        if (ticks>=250){
+//            float[] position = Positions.puckCenterFaceoff();
+//            handler.getSim().getGame().getPuck().setPositionRelative(position[0],position[1],false);
+//            State.setState(handler.getSim().simState);
+//        }
     }
 
     @Override

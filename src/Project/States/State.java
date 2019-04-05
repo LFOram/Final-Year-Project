@@ -21,6 +21,8 @@ public abstract class State {
         return currentState;
     }
 
+    public abstract void setFaceoffDot(int dot);
+
     public abstract void update();
 
     public abstract void render(Graphics g);

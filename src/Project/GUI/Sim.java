@@ -5,6 +5,7 @@ import Project.Base.Game;
 import Project.Base.Handler;
 import Project.GUI.Assets.Assets;
 import Project.Base.Enums.Team;
+import Project.States.FaceoffState;
 import Project.States.GameStartState;
 import Project.States.SimState;
 import Project.States.State;
@@ -31,6 +32,7 @@ public class Sim implements Runnable{
     //States
     public State simState;
     public State startState;
+    public State faceoffState;
     private Handler handler;
 
 
@@ -51,7 +53,13 @@ public class Sim implements Runnable{
 
         startState = new GameStartState(handler);
         simState = new SimState(handler);
+        faceoffState = new FaceoffState(handler);
         State.setState(startState);
+    }
+
+    public void setFaceoffState(int faceoffDot){
+        simState = faceoffState;
+        simState.setFaceoffDot(faceoffDot);
     }
 
 
@@ -62,6 +70,8 @@ public class Sim implements Runnable{
         }
 
     }
+
+
 
     private void render(){
         bs = display.getCanvas().getBufferStrategy();

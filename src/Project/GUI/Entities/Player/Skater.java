@@ -149,6 +149,11 @@ public class Skater extends Player {
         setPlayerState(hasPuckPlayerState);
     }
 
+    public void faceoff(float x, float y){
+        setPlayerState(faceoffPlayerState);
+        setTargetPositionRelative(x,y,isHomeTeam());
+    }
+
     public String toString() {
         String string = position.toString() + " - " +  super.toString();
         string += stats.toString();

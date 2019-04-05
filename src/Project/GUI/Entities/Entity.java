@@ -25,6 +25,11 @@ public abstract class Entity {
         bounds = new Rectangle((int)x,(int) y,width,height);
     }
 
+    public void setPositionAbsolute(int x,int y){
+        this.x = x - width/2;
+        this.y = y - height/2;
+    }
+
     protected void updateBounds(float x, float y){
         bounds.x = (int) x;
         bounds.y = (int) y;

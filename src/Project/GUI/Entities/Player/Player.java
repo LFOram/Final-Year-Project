@@ -119,6 +119,8 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         return allPlayers;
     }
 
+    public abstract void faceoff(float x,float y);
+
 
     protected void setPlayerState(PlayerState state){
         this.playerState = state;
@@ -199,7 +201,9 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     @Override
     public void tick() {
-
+        playerState.think();
+        playerState.act();
+        move();
     }
 
     @Override
