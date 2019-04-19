@@ -22,7 +22,7 @@ public class Arena {
         zonePositions.put(8,new float[]{290f,214f});
         zonePositions.put(9,new float[]{390f,214f});
         zonePositions.put(10,new float[]{490f,214f});
-        zonePositions.put(12,new float[]{90f,321f});
+        zonePositions.put(11,new float[]{90f,321f});
         zonePositions.put(12,new float[]{190f,321f});
         zonePositions.put(13,new float[]{290f,321f});
         zonePositions.put(14,new float[]{390f,321f});

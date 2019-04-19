@@ -7,6 +7,8 @@ import Project.GUI.Entities.Player.Player;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static java.lang.Math.sqrt;
+
 public abstract class Entity {
     protected Game game;
 
@@ -44,11 +46,23 @@ public abstract class Entity {
             if(p.equals(this)){
                 continue;
             }
-            if (p.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset,yOffset))){
+//            System.out.println(p.getCollisionBounds(0f,0f));
+//            System.out.println(getCollisionBounds(xOffset,yOffset));
+//            if (p.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset,yOffset))){
+//                return true;
+//            }
+            if(getDistance(this,p)<7){
                 return true;
             }
+            else return false;
         }
         return false;
+    }
+
+    private float getDistance(Entity a, Entity b){
+        float deltaX = targetX - x;
+        float deltaY = targetY - y;
+        return  (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     }
 
     public Player getHittingPlayer(Player player,ArrayList<Player> playerArrayList,float xOffset, float yOffset){
@@ -83,6 +97,11 @@ public abstract class Entity {
             this.targetX = 595 - x;
             this.targetY = y;
         }
+    }
+
+    public void setTargetAbsolute(float x, float y, Boolean home){
+        this.targetX = x;
+        this.targetY = y;
     }
 
     public void setPositionRelative(float x, float y, Boolean home){

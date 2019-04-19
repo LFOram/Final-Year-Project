@@ -15,11 +15,10 @@ public class GameStartState extends State {
 
     public GameStartState(Handler handler){
         super(handler);
-        startGame();
         ticks = 0;
     }
 
-    private void startGame(){
+    public void startGame(){
         handler.getSim().getGame().getHomeTeam().setLines(Line.FORWARD1,Line.DEFENCE1);
         handler.getSim().getGame().getHomeTeam().setCurrentGoalie(Line.GOALIE1);
 
@@ -37,13 +36,21 @@ public class GameStartState extends State {
         float i = 0;
         for(Player player: team.values()){
             position = Positions.getCenterFaceoff(player);
-            player.setCurrentPosition(600-(25-(10*i)),60);
+            if(home){
+                player.setCurrentPosition((600-25-(5*i)),60);
+            }
+            else {
+                player.setCurrentPosition((600+25+(15*i)),60);
+            }
             player.setTargetPositionRelative(position[0],position[1],home);
             i++;
         }
     }
 
+    @Override
+    public void setFaceoffDot(int dot) {
 
+    }
 
     @Override
     public void update() {
@@ -64,14 +71,7 @@ public class GameStartState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.rink,0,0,null);
-        for (Player player:handler.getSim().getGame().getAwayTeam().getAllOnIce().values()) {
-            player.render(g);
-        }
-        for (Player player:handler.getSim().getGame().getHomeTeam().getAllOnIce().values()){
-            player.render(g);
-        }
-        handler.getSim().getGame().getPuck().render(g);
+
     }
 }
 

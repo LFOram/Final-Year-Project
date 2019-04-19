@@ -3,7 +3,9 @@ package Project.States;
 import Project.Base.Enums.Position;
 import Project.Base.Handler;
 import Project.Base.Positions;
+import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Player.Player;
+import Project.GUI.Entities.Player.Skater;
 import Project.GUI.Entities.Puck;
 
 import java.awt.*;
@@ -22,9 +24,11 @@ public class FaceoffState extends State {
 
     public void setFaceoffDot(int dot){
         //start faceoff timer (250 ticks)
+        System.out.println("I'm here");
         timer = 0;
         //hide puck
         puck.setPositionAbsolute(5,5);
+        //puck.setSpeed(0);
         faceoffDot = dot;
         switch (dot){
             case 0:
@@ -64,7 +68,7 @@ public class FaceoffState extends State {
                 dotY=380;
                 break;
             }
-         puck.setPositionAbsolute(dotX,dotY);
+            //puck.setPositionAbsolute(dotX,dotY);
         for (Player p:handler.getSim().getGame().getBothTeamOnIce()){
             if (faceoffDot == 0){
                 p.faceoff(Positions.getCenterFaceoff(p)[0],Positions.getCenterFaceoff(p)[1]); //double call for no reason.. oh well
@@ -73,23 +77,31 @@ public class FaceoffState extends State {
                 float[] offset = Positions.getFaceoffOffset(p);
                 p.faceoff(dotX+offset[0],dotY+offset[1]);
             }
-            p.faceoff(dotX,dotY);
+            //p.faceoff(dotX,dotY);
         }
     }
 
+    @Override
+    public void startGame() {
 
+    }
 
     @Override
     public void update() {
-        timer += 1;
+        super.update();
+        System.out.println(timer);
 
-        if(timer>250){
-            puck.setPositionAbsolute(dotX,dotY);
+        handler.getSim().getGame().tickFaceoffTimer();
+
+        if(handler.getSim().getGame().getFaceoffTimer()>220){
+            //puck.setPositionAbsolute(600,255);
+            //puck.setSpeed(0);
+            for(Player p:handler.getSim().getGame().getBothTeamOnIce()){
+                if (p.getCurrentPosition() == Position.CENTER) {
+                }
+            }
+            System.out.println(dotX + " " + dotY);
+            }
         }
-    }
-
-    @Override
-    public void render(Graphics g) {
-
-    }
 }
+

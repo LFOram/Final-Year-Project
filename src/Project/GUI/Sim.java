@@ -46,20 +46,24 @@ public class Sim implements Runnable{
         display = new GUITest2();
         Assets.init();
         Database.init();
-        handler = new Handler(this);
         //Start Game
         game = new Game(Team.TOR,Team.SFP);
 
-
+        handler = new Handler(this);
         startState = new GameStartState(handler);
         simState = new SimState(handler);
         faceoffState = new FaceoffState(handler);
+
         State.setState(startState);
+        startState.startGame();
+
+
     }
 
     public void setFaceoffState(int faceoffDot){
-        simState = faceoffState;
-        simState.setFaceoffDot(faceoffDot);
+        State.setState(faceoffState);
+        System.out.println("I'm here!!S");
+        faceoffState.setFaceoffDot(faceoffDot);
     }
 
 

@@ -63,6 +63,11 @@ public class Goalie extends Player {
     }
 
     @Override
+    public void faceoff(float x, float y) {
+
+    }
+
+    @Override
     public Stats getStats() {
         return stats;
     }

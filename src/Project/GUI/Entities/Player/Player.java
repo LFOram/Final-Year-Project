@@ -23,12 +23,12 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     private Boolean onIce = false;
 
-    private Team team;
+    protected Team team;
 
-    private Boolean homeTeam;
+    protected Boolean homeTeam;
     private int numberOffset;
-    private Boolean hasPuck;
-    private Possession lastTouch;
+    protected Boolean hasPuck = false;
+    protected Possession lastTouch;
 
     protected int currentEndurance = 100;
 
@@ -140,11 +140,11 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private void updateState(){
         if (this instanceof Skater) {
             if(hasPuck){
-                this.setPlayerState(new HasPuckPlayerState(this));
+                this.setPlayerState(new HasPuckPlayerState((Skater)this));
             }
             else {
                 if (lastTouch == Possession.FACEOFF) {
-                    this.setPlayerState(new FaceoffPlayerState(this));
+                    this.setPlayerState(new FaceoffPlayerState((Skater)this));
                 } else if (lastTouch == Possession.HOME){
                     if (homeTeam){
                         this.setPlayerState(new AttackingPlayerState((Skater)this));
@@ -153,13 +153,16 @@ public abstract class Player extends Entity implements PropertyChangeListener {
                         this.setPlayerState(new DefendingPlayerState(this));
                     }
                 } else if (lastTouch == Possession.AWAY) {
-                    if (homeTeam){
+                    if (homeTeam) {
                         this.setPlayerState(new DefendingPlayerState(this));
-                    }
-                    else {
-                        this.setPlayerState(new AttackingPlayerState((Skater)this));
+                    } else {
+                        this.setPlayerState(new AttackingPlayerState((Skater) this));
                     }
                 }
+                else if (lastTouch == Possession.LOOSE){
+                        this.setPlayerState(new DefaultPlayerState(this));
+                }
+
             }
         } else {
             //is goalie
@@ -191,7 +194,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         return currentEndurance;
     }
 
-    protected void setHasPuck(boolean hasPuck){
+    public void setHasPuck(boolean hasPuck){
         this.hasPuck = hasPuck;
     }
 
@@ -199,11 +202,24 @@ public abstract class Player extends Entity implements PropertyChangeListener {
         return hasPuck;
     }
 
+    public void pass(Player target){
+
+    }
+
+    public void setFaceoffRoll(int faceoffRoll){
+
+    }
+    public int getFaceoffRoll(){return 0;}
+
+    public void setState(int state){
+       updateState();
+    }
+
     @Override
     public void tick() {
+        updateState();
         playerState.think();
         playerState.act();
-        move();
     }
 
     @Override

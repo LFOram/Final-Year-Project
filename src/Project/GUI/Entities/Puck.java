@@ -27,7 +27,7 @@ public class Puck extends Entity {
 
 
     public Puck(Game game) {
-        super(607, 254,5,5);
+        super(5, 5,5,5);
         this.game = game;
     }
 
@@ -52,13 +52,21 @@ public class Puck extends Entity {
         this.yVelocity = velocity;
     }
 
+    public void setAngeleCalculate(){
+        var deltaX = targetX - x;
+        var deltaY = targetY - y;
+        var rad = Math.atan2(deltaY,deltaX);
+        angle = (float) rad;
+    }
 
     public void setAngle(float angle){
         this.angle = angle;
     }
 
     private void movePuck() {
-        float decel = 0.025f;
+
+        System.out.println(targetX + " " + targetY + "PUCK" + xVelocity);
+        float decel = 0.005f;
         if (xVelocity > 0.1) {
             if (xVelocity >= 0) {
                 xVelocity = xVelocity - decel;
@@ -79,8 +87,12 @@ public class Puck extends Entity {
         float ty1 = (float) (y + yVelocity * sin(angle));
         float ty2 = (float) (y + bounds.height + yVelocity * sin(angle));
         if(game.getArena().legalMove(tx1,tx2,ty1,ty2)) {
+            System.out.println(x + " " + y);
+            System.out.println( xVelocity * cos(angle));
+            System.out.println( yVelocity * sin(angle));
             x += xVelocity * cos(angle);
             y += yVelocity * sin(angle);
+            System.out.println("MOVING");
         }
         else {
             int bounce = game.getArena().getBounce(x,y);
@@ -108,6 +120,14 @@ public class Puck extends Entity {
 
     public int getSpeed(){
         return Math.abs((int)xVelocity);
+    }
+
+    public float getVelocityX(){
+        return xVelocity;
+    }
+
+    public float getVelocityY(){
+        return yVelocity;
     }
 
     @Override

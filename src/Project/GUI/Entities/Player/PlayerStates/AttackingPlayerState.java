@@ -65,9 +65,10 @@ public class AttackingPlayerState implements PlayerState {
         float[] targetPosition;
         if(canBeOffside){
             //ensure won't move into offside position
-            targetPosition = player.getGame().getArena().getZonePosition((((player.getIdealOffenceZone()-1) /5) +1));
+            targetPosition = player.getGame().getArena().getZonePosition((((player.getIdealOffenceZone()-1) /5)));
         }
         else {
+            System.out.println("ELSE");
             targetPosition = player.getGame().getArena().getZonePosition(player.getIdealOffenceZone());
         }
         return targetPosition;
@@ -76,7 +77,9 @@ public class AttackingPlayerState implements PlayerState {
 
     private void moveTowardsIdealZone(){
         float[] targetPosition = getIdealZonePossible();
-        player.setTargetPositionRelative(targetPosition[0],targetPosition[1],player.isHomeTeam());
+        System.out.println(targetPosition[1]);
+        System.out.println(player.isHomeTeam());
+        player.setTargetPositionRelative(targetPosition[0],targetPosition[1],!player.isHomeTeam());
     }
 
     private void moveTowardsPuck(){
@@ -112,6 +115,22 @@ public class AttackingPlayerState implements PlayerState {
         //how close to the puck are we
         if (!puckPossessed) {
             closestToPuck = player.getGame().isClosestToPuck(player);
+            int goForPuckChance = 20;
+            if (closestToPuck) {
+                goForPuckChance += 50;
+            }
+            goForPuckChance += (player.getCurrentEndurance() / 10);
+            goForPuckChance += (playerStats.getStatPuckHandling() * 0.1);
+            if (goForPuckChance > player.getGame().random(100)) {
+                goForPuck = true;
+                moveTowardsZone = false;
+            } else {
+                goForPuck = false;
+                moveTowardsZone = true;
+            }
+        }
+        else {
+            moveTowardsZone = true;
         }
 
         //is puck in offensive zone yet (offside?)
@@ -132,19 +151,7 @@ public class AttackingPlayerState implements PlayerState {
         }
 
         //go for puck or move to better position
-        int goForPuckChance = 20;
-        if (closestToPuck) {
-            goForPuckChance += 50;
-        }
-        goForPuckChance += (player.getCurrentEndurance() / 10);
-        goForPuckChance += (playerStats.getStatPuckHandling() * 0.1);
-        if (goForPuckChance > player.getGame().random(100)) {
-            goForPuck = true;
-            moveTowardsZone = false;
-        } else {
-            goForPuck = false;
-            moveTowardsZone = true;
-        }
+
     }
 
 
@@ -157,6 +164,6 @@ public class AttackingPlayerState implements PlayerState {
         else if (moveTowardsZone){
             moveTowardsIdealZone();
         }
-        contactWithPuck();
+        //contactWithPuck();
     }
 }

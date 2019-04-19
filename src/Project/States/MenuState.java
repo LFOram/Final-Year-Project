@@ -10,6 +10,16 @@ public class MenuState extends State{
     }
 
     @Override
+    public void startGame() {
+
+    }
+
+    @Override
+    public void setFaceoffDot(int dot) {
+
+    }
+
+    @Override
     public void update() {
 
     }

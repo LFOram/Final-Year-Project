@@ -25,6 +25,7 @@ public class Game {
     private int tickTimer = 0;
     private int homeScore = 0;
     private int awayScore = 0;
+    private int faceoffTimer = 0;
     private Random rand = new Random();
 
 
@@ -42,7 +43,7 @@ public class Game {
             player.setGame(this);
         }
 
-        puck.setSpeed(10);
+        //puck.setSpeed(10);
     }
 
     public int random(int maxRandom){
@@ -174,6 +175,22 @@ public class Game {
         return playerList.toString();
     }
 
+    public Player getOtherCenter(boolean isHome){
+        if(isHome){
+            return getAwayTeam().getCenter();
+        }
+        else {
+            return getHomeTeam().getCenter();
+        }
+    }
+
+    public int getFaceoffTimer(){
+        return faceoffTimer;
+    }
+
+    public void tickFaceoffTimer(){
+        faceoffTimer ++;
+    }
     public Puck getPuck() {
         return puck;
     }
