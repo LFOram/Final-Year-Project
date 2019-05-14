@@ -74,17 +74,15 @@ public class Skater extends Player {
             else if (lastTouch == Possession.LOOSE){
                 this.setPlayerState(defaultPlayerState);
             }
-
         }
     }
 
 
     public void move(float angle) {
-        System.out.println("Direction:" + angle);
         speed = ((stats.getStatSkating() * stats.getStatEndurance()) / currentEndurance) / 10;
         float accel = stats.getStatSkating() * 0.00625f; //0.00625 used to get ~0.5 average based on stats found from Leo Culhane, McGill University 2012
         float decel = 0.75f;
-
+        //get distance to target
         float deltaX = targetX - x;
         float deltaY = targetY - y;
         float distance = (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
@@ -94,11 +92,11 @@ public class Skater extends Player {
             xVelocity = Math.min(xVelocity+accel,speed);
             yVelocity = Math.min(yVelocity+accel,speed);
         }
-        else {
+        else {//deceleration
             xVelocity = Math.max(xVelocity - decel, 0);
             yVelocity = Math.max(yVelocity - decel, 0);
         }
-
+        //movement
         float xMove = (float) (xVelocity * cos(angle));
         float yMove = (float) (yVelocity * sin(angle));
         float tx1 = (float) (x + xVelocity * cos(angle));
@@ -112,27 +110,24 @@ public class Skater extends Player {
                 }
                 else {
                     playerState.hit(xMove,0f,xMove,yMove);
-                    System.out.println(toString() +" HITx");
+                    //System.out.println(toString() +" HITx");
                 }
                 if(!checkPlayerCollision(0f,yMove)){
                     moveY(yMove);
                 }
                 else{
                     playerState.hit(0f,yMove,xMove,yMove);
-                    System.out.println(toString() + " HITy");
+                    //System.out.println(toString() + " HITy");
                 }
             } else {
-                //System.out.println("Default Move");
                 moveX(xMove);
                 moveY(yMove);
             }
         }
         else {
-            System.out.println(toString() + " Not Legal");
             xVelocity = 0;
             yVelocity = 0;
         }
-
     }
 
     public int getSpeed() {
@@ -178,9 +173,52 @@ public class Skater extends Player {
         passStrength += game.random(50);
         passStrength = passStrength/10;
         System.out.println(passTargetX + " " + passTergetY + " " + passStrength);
-        game.getPuck().setTargetAbsolute(passTargetX, passTergetY,isHomeTeam());
+        game.getPuck().setTargetAbsolute(passTargetX, passTergetY);
         game.getPuck().setAngeleCalculate();
         game.getPuck().setSpeed((passStrength));
+        game.getPuck().resetPuckTimer();
+        game.getPuck().setLastTouch(Possession.LOOSE);
+        setHasPuck(false);
+        updateState();
+    }
+
+    public void shoot(){
+        float targetsX;
+        float targetsY;
+
+        if(isHomeTeam()){
+            targetsX = 154;
+            targetsY = 267;
+        }
+        else {
+            targetsX = 1060;
+            targetsY = 267;
+        }
+
+        int xnoise = getGame().random(10)-stats.getStatScoring();
+        int ynoise = getGame().random(150)-stats.getStatScoring();
+        if(getGame().random(1) == 0){
+            xnoise = -xnoise;
+        }
+        if(getGame().random(1)== 1){
+            ynoise = -ynoise;
+        }
+        float shootTargetX = targetsX + xnoise;
+        float shootTergetY = targetsY + ynoise;
+
+        int shotStrength = 0;
+        shotStrength += stats.getStatStrength()*0.2;
+        shotStrength += stats.getStatScoring()*0.5;
+        shotStrength += game.random(50);
+        shotStrength = shotStrength/7;
+        System.out.println(shootTargetX + " " + shootTergetY + " " + shotStrength);
+        game.getPuck().setTargetAbsolute(shootTargetX, shootTergetY);
+        game.getPuck().setAngeleCalculate();
+        game.getPuck().setSpeed((shotStrength));
+        game.getPuck().resetPuckTimer();
+        setHasPuck(false);
+        game.getPuck().setLastTouch(Possession.LOOSE);
+        updateState();
     }
 
     public int getIdealOffenceZone(){
@@ -195,6 +233,24 @@ public class Skater extends Player {
                 return 2;
             case RDEFENCE:
                 return 12;
+        }
+        return 0;
+    }
+
+    public int getIdealDefenceZone(){
+        switch (currentPosition){
+            case CENTER:
+                return 8;
+            case LWING:
+                return 2;
+            case RWING:
+                return 12;
+            case LDEFENCE:
+                return 4;
+            case RDEFENCE:
+                return 14;
+            case DEFENCE:
+                return 4;
         }
         return 0;
     }
@@ -224,8 +280,8 @@ public class Skater extends Player {
     private void updateTimers(){
         hitTimer ++;
         faceoffTimer ++;
-        System.out.println(hitTimer);
-        System.out.println(faceoffTimer);
+        //System.out.println(hitTimer);
+        //System.out.println(faceoffTimer);
     }
 
     public void setHasPuck(){

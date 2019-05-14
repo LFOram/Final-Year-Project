@@ -45,11 +45,11 @@ public class DefaultPlayerState implements PlayerState {
     public static Point2D calculateInterceptionPoint(final Point2D a, final Point2D v, final Point2D b, final double s) {
         final double ox = a.getX() - b.getX();
         final double oy = a.getY() - b.getY();
-        System.out.println(ox + " " + oy);
+        //System.out.println(ox + " " + oy);
 
         final double h1 = v.getX() * v.getX() + v.getY() * v.getY() - s * s;
         final double h2 = ox * v.getX() + oy * v.getY();
-        System.out.println(h1 + " " + h2);
+        //System.out.println(h1 + " " + h2);
         double t;
         if (h1 == 0) { // problem collapses into a simple linear equation
             t = -(ox * ox + oy * oy) / (2*h2);
@@ -59,7 +59,7 @@ public class DefaultPlayerState implements PlayerState {
             double discriminant = minusPHalf * minusPHalf - (ox * ox + oy * oy) / h1; // term in brackets is h3
             if (discriminant < 0) { // no (real) solution then...
                 System.out.println("Oops2");
-                discriminant = 1;
+                discriminant = 0.1;
                 //return null;
             }
 
@@ -100,17 +100,17 @@ public class DefaultPlayerState implements PlayerState {
 
         float puckVelocityX = -(player.getGame().getPuck().getVelocityX());
         float puckVelocityY = -(player.getGame().getPuck().getVelocityY());
-        int ticksToPuck = (int) (distanceToPuck/Math.min(puckVelocityX,puckVelocityY));
-        float predictedX = puckX+(puckVelocityX*ticksToPuck);
-        float predictedY = puckY+(puckVelocityY*ticksToPuck);
+        //int ticksToPuck = (int) (distanceToPuck/Math.min(puckVelocityX,puckVelocityY));
+        //float predictedX = puckX+(puckVelocityX*ticksToPuck);
+        //float predictedY = puckY+(puckVelocityY*ticksToPuck);
 //        Point2D puckPoint = new Point2D.Float(player.getGame().getPuck().getX(),player.getGame().getPuck().getY());
 //        Point2D puckVelocity = new Point2D.Float(player.getGame().getPuck().getVelocityX(),player.getGame().getPuck().getVelocityY());
 //        Point2D playerPoint = new Point2D.Float(player.getX(),player.getY());
         double playerSpeed = ((Skater)player).getSpeed();
 //        Point2D interceptPoint = calculateInterceptionPoint(puckPoint,puckVelocity,playerPoint,playerSpeed);
+//        player.setTargetPositionAbsolute((float)interceptPoint.getX(),(float)interceptPoint.getY());
         //player.setTargetPositionAbsolute(predictedX, predictedY);
-        System.out.println(puckVelocityX);
-        System.out.println(puckVelocityY);
+
         player.setTargetPositionAbsolute(puckX,puckY);
 
 //        float moveAngle = (float) Math.atan2(deltaY,deltaX);
@@ -141,8 +141,9 @@ public class DefaultPlayerState implements PlayerState {
 //    }
 
     private void pickUpPuck(){
-        if (distanceToPuck()<25){
+        if (distanceToPuck()<15){
             //pick up puck
+            System.out.println("GETTING PUCK");
             ((Skater)player).setHasPuck();
         }
     }
@@ -165,7 +166,10 @@ public class DefaultPlayerState implements PlayerState {
             if (((Skater)player).getFaceoffTimer()>30) {
                 moveTowardsPuck();
             }
-            pickUpPuck();
+            System.out.println(player.getGame().getPuck().getPuckTimer());
+            if(player.getGame().getPuck().getPuckTimer()>10) {
+                pickUpPuck();
+            }
         }
 
     }

@@ -110,7 +110,6 @@ public class Sim implements Runnable{
         long lastTime = System.nanoTime();
 
 
-
         //GAME LOOP!
         while (running){
             now = System.nanoTime();

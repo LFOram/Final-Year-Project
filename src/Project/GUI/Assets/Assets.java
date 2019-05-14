@@ -34,11 +34,11 @@ public class Assets {
 
 
     public static void loadTeamAssets(Team home, Team away){
-        //Home Team
         int[] position;
         int teamNo;
         BufferedImage image;
 
+        //Home Team
         position = Database.getTeamPosition(home);
         homeTeam = homeSheet.crop((Objects.requireNonNull(position)[0]*width),(position[1]*height),width,height);
         teamNo = Database.getTeamNumber(home);
@@ -55,9 +55,5 @@ public class Assets {
             image = awayNumberSheet.crop(i*5,teamNo*9,5,9);
             awayNumbers.add(image);
         }
-
-
     }
-
-
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="605.0" y="244.0">Project.States.SimState</node>
+    <node x="210.0" y="211.0">Project.States.GameStartState</node>
+    <node x="453.75" y="0.0">Project.States.State</node>
+    <node x="0.0" y="222.0">Project.States.MenuState</node>
+    <node x="815.0" y="233.0">Project.States.FaceoffState</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Project.States.SimState" target="Project.States.State">
+      <point x="0.0" y="-36.5" />
+      <point x="700.0" y="191.0" />
+      <point x="572.5" y="191.0" />
+      <point x="23.75" y="80.5" />
+    </edge>
+    <edge source="Project.States.FaceoffState" target="Project.States.State">
+      <point x="0.0" y="-47.5" />
+      <point x="910.0" y="181.0" />
+      <point x="620.0" y="181.0" />
+      <point x="71.25" y="80.5" />
+    </edge>
+    <edge source="Project.States.GameStartState" target="Project.States.State">
+      <point x="0.0" y="-69.5" />
+      <point x="397.5" y="191.0" />
+      <point x="525.0" y="191.0" />
+      <point x="-23.75" y="80.5" />
+    </edge>
+    <edge source="Project.States.MenuState" target="Project.States.State">
+      <point x="0.0" y="-58.5" />
+      <point x="95.0" y="181.0" />
+      <point x="477.5" y="181.0" />
+      <point x="-71.25" y="80.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="279.0" y="198.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

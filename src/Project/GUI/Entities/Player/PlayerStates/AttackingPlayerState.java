@@ -5,6 +5,8 @@ import Project.GUI.Entities.Player.Player;
 import Project.GUI.Entities.Player.Skater;
 import Project.GUI.Entities.Player.SkaterStats;
 
+import static java.lang.Math.sqrt;
+
 public class AttackingPlayerState implements PlayerState {
     private Skater player;
     private SkaterStats playerStats;
@@ -65,7 +67,7 @@ public class AttackingPlayerState implements PlayerState {
         float[] targetPosition;
         if(canBeOffside){
             //ensure won't move into offside position
-            targetPosition = player.getGame().getArena().getZonePosition((((player.getIdealOffenceZone()-1) /5)));
+            targetPosition = player.getGame().getArena().getZonePosition((((player.getIdealOffenceZone()-1) %5)));
         }
         else {
             System.out.println("ELSE");
@@ -77,8 +79,6 @@ public class AttackingPlayerState implements PlayerState {
 
     private void moveTowardsIdealZone(){
         float[] targetPosition = getIdealZonePossible();
-        System.out.println(targetPosition[1]);
-        System.out.println(player.isHomeTeam());
         player.setTargetPositionRelative(targetPosition[0],targetPosition[1],!player.isHomeTeam());
     }
 
@@ -154,6 +154,23 @@ public class AttackingPlayerState implements PlayerState {
 
     }
 
+    private float distanceToPuck(){
+        float puckX = player.getGame().getPuck().getX();
+        float puckY = player.getGame().getPuck().getY();
+
+        float deltaX = puckX - player.getX();
+        float deltaY = puckY - player.getY();
+        float distanceToPuck = (float) sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+        return distanceToPuck;
+    }
+
+    private void pickUpPuck(){
+        if (distanceToPuck()<15&&player.getGame().getPuck().getPuckTimer()>10){
+            //pick up puck
+            ((Skater)player).setHasPuck();
+        }
+    }
+
 
 
     @Override
@@ -164,6 +181,7 @@ public class AttackingPlayerState implements PlayerState {
         else if (moveTowardsZone){
             moveTowardsIdealZone();
         }
+        pickUpPuck();
         //contactWithPuck();
     }
 }

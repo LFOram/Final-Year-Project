@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="50.75" y="79.0">Project.GUI.Entities.Player.Player</node>
+    <node x="100.25" y="0.0">Project.GUI.Entities.Entity</node>
+    <node x="0.0" y="696.0">Project.GUI.Assets.Sprite</node>
+    <node x="133.0" y="474.0">Project.States.SimState</node>
+    <node x="412.0" y="622.0">Project.GUI.Assets.Assets</node>
+    <node x="538.0" y="622.0">Project.Base.Arena</node>
+    <node x="771.0" y="548.0">Project.Base.Positions</node>
+    <node x="909.0" y="622.0">Project.Base.Enums.Team</node>
+    <node x="372.0" y="474.0">Project.States.GameStartState</node>
+    <node x="694.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.GoaliePlayerState</node>
+    <node x="786.0" y="622.0">Project.Circle</node>
+    <node x="0.0" y="548.0">Project.GUI.Entities.Player.PlayerDetails</node>
+    <node x="150.75" y="79.0">Project.GUI.Entities.Puck</node>
+    <node x="0.0" y="158.0">Project.GUI.Entities.Player.Goalie</node>
+    <node x="530.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.DefaultPlayerState</node>
+    <node x="318.0" y="548.0">Project.GUI.Assets.SpriteSheet</node>
+    <node x="141.0" y="622.0">Project.Base.Enums.Position</node>
+    <node x="662.0" y="622.0">Project.Base.Game</node>
+    <node x="150.0" y="632.0">Project.Base.Enums.Line</node>
+    <node x="822.0" y="395.0">Project.GUI.Assets.ImageLoader</node>
+    <node x="277.0" y="622.0">Project.Base.Handler</node>
+    <node x="462.75" y="232.0">Project.GUI.Entities.Player.PlayerStates.PlayerState</node>
+    <node x="202.75" y="395.0">Project.States.State</node>
+    <node x="546.0" y="474.0">Project.GUI.Entities.Player.SkaterStats</node>
+    <node x="624.75" y="395.0">Project.Base.Stats</node>
+    <node x="238.0" y="696.0">Project.Base.Enums.Stat</node>
+    <node x="177.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.HasPuckPlayerState</node>
+    <node x="621.0" y="548.0">Project.Base.Enums.Possession</node>
+    <node x="160.0" y="548.0">Project.Base.TeamObject</node>
+    <node x="247.0" y="474.0">Project.States.MenuState</node>
+    <node x="0.0" y="622.0">Project.Base.Database</node>
+    <node x="0.0" y="474.0">Project.States.FaceoffState</node>
+    <node x="671.0" y="474.0">Project.GUI.Entities.Player.GoalieStats</node>
+    <node x="0.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.AttackingPlayerState</node>
+    <node x="101.0" y="158.0">Project.GUI.Entities.Player.Skater</node>
+    <node x="853.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.FaceoffPlayerState</node>
+    <node x="349.0" y="321.0">Project.GUI.Entities.Player.PlayerStates.DefendingPlayerState</node>
+    <node x="470.0" y="548.0">Project.GUI.Entities.Player.PlayerStates.SkaterState</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Project.GUI.Entities.Player.Player" target="Project.GUI.Entities.Entity">
+      <point x="0.0" y="-14.5" />
+      <point x="90.75" y="54.0" />
+      <point x="119.75" y="54.0" />
+      <point x="-19.5" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.GoalieStats" target="Project.Base.Stats">
+      <point x="0.0" y="-14.5" />
+      <point x="724.0" y="449.0" />
+      <point x="679.5" y="449.0" />
+      <point x="18.25" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.AttackingPlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="78.5" y="281.0" />
+      <point x="471.5833333333333" y="281.0" />
+      <point x="-44.166666666666686" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.SkaterStats" target="Project.Base.Stats">
+      <point x="0.0" y="-14.5" />
+      <point x="598.5" y="449.0" />
+      <point x="643.0" y="449.0" />
+      <point x="-18.25" y="14.5" />
+    </edge>
+    <edge source="Project.States.SimState" target="Project.States.State">
+      <point x="0.0" y="-14.5" />
+      <point x="180.0" y="454.0" />
+      <point x="230.5" y="454.0" />
+      <point x="-9.25" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.GoaliePlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="763.5" y="291.0" />
+      <point x="542.25" y="291.0" />
+      <point x="26.5" y="14.5" />
+    </edge>
+    <edge source="Project.States.GameStartState" target="Project.States.State">
+      <point x="0.0" y="-14.5" />
+      <point x="436.5" y="444.0" />
+      <point x="267.5" y="444.0" />
+      <point x="27.75" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.Goalie" target="Project.GUI.Entities.Player.Player">
+      <point x="0.0" y="-14.5" />
+      <point x="40.5" y="133.0" />
+      <point x="70.75" y="133.0" />
+      <point x="-20.0" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.DefendingPlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="429.5" y="301.0" />
+      <point x="506.9166666666667" y="301.0" />
+      <point x="-8.833333333333314" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.HasPuckPlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="253.0" y="291.0" />
+      <point x="489.25" y="291.0" />
+      <point x="-26.5" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.Skater" target="Project.GUI.Entities.Player.Player">
+      <point x="0.0" y="-14.5" />
+      <point x="141.0" y="133.0" />
+      <point x="110.75" y="133.0" />
+      <point x="20.0" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Puck" target="Project.GUI.Entities.Entity">
+      <point x="0.0" y="-14.5" />
+      <point x="187.75" y="54.0" />
+      <point x="158.75" y="54.0" />
+      <point x="19.5" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.FaceoffPlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="925.5" y="281.0" />
+      <point x="559.9166666666666" y="281.0" />
+      <point x="44.16666666666663" y="14.5" />
+    </edge>
+    <edge source="Project.States.FaceoffState" target="Project.States.State">
+      <point x="0.0" y="-14.5" />
+      <point x="56.5" y="444.0" />
+      <point x="212.0" y="444.0" />
+      <point x="-27.75" y="14.5" />
+    </edge>
+    <edge source="Project.GUI.Entities.Player.PlayerStates.DefaultPlayerState" target="Project.GUI.Entities.Player.PlayerStates.PlayerState">
+      <point x="0.0" y="-14.5" />
+      <point x="602.0" y="301.0" />
+      <point x="524.5833333333333" y="301.0" />
+      <point x="8.833333333333314" y="14.5" />
+    </edge>
+    <edge source="Project.States.MenuState" target="Project.States.State">
+      <point x="0.0" y="-14.5" />
+      <point x="299.5" y="454.0" />
+      <point x="249.0" y="454.0" />
+      <point x="9.25" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="355.5" y="357.5" />
+  <SelectedNodes>
+    <node>Project.Base.Enums.Line</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

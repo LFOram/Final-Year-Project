@@ -1,11 +1,13 @@
 package Project.Base;
 
 import Project.Base.Enums.Line;
+import Project.Base.Enums.Position;
 import Project.Base.Enums.Possession;
 import Project.Base.Enums.Team;
 import Project.GUI.Assets.Assets;
 import Project.GUI.Entities.Entity;
 import Project.GUI.Entities.Player.Player;
+import Project.GUI.Entities.Player.Skater;
 import Project.GUI.Entities.Puck;
 
 import java.util.*;
@@ -184,6 +186,36 @@ public class Game {
         }
     }
 
+    public int getDistance(Player a, Player b){
+        float deltaX = a.getX() - b.getX();
+        float deltaY = a.getY() - b.getY();
+        return (int)(sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2)));
+    }
+
+    public int getGoalieDistance(Player a,boolean isHomeTeam){
+        for(Player p:getOpponentTeam(isHomeTeam)){
+            if (p.getCurrentPosition() == Position.GOALIE) {
+                return getDistance(a,p);
+            }
+        }
+        return 600;
+    }
+
+    public int getClosestPlayerDistance(Player a){
+        int min = 1000;
+        for(Player p:getOpponentTeam(a.isHomeTeam())){
+            if(a.equals(p)){
+                continue;
+            }
+            else {
+                if(getDistance(a,p)<min){
+                    min = getDistance(a,p);
+                }
+            }
+        }
+        return min;
+    }
+
     public int getFaceoffTimer(){
         return faceoffTimer;
     }
@@ -191,6 +223,7 @@ public class Game {
     public void tickFaceoffTimer(){
         faceoffTimer ++;
     }
+
     public Puck getPuck() {
         return puck;
     }

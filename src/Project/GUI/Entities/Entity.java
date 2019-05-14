@@ -51,7 +51,7 @@ public abstract class Entity {
 //            if (p.getCollisionBounds(0f,0f).intersects(getCollisionBounds(xOffset,yOffset))){
 //                return true;
 //            }
-            if(getDistance(this,p)<7){
+            if(getDistance(this,p)<6){
                 return true;
             }
             else return false;
@@ -99,7 +99,7 @@ public abstract class Entity {
         }
     }
 
-    public void setTargetAbsolute(float x, float y, Boolean home){
+    public void setTargetAbsolute(float x, float y){
         this.targetX = x;
         this.targetY = y;
     }

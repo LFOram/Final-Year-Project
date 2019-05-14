@@ -29,6 +29,27 @@ public class Arena {
         zonePositions.put(15,new float[]{490f,321f});
     }
 
+    private static HashMap<Integer,Integer[]> offZoneWeights;
+    //Passing, Shooting, Skating = 100.
+    static {
+        offZoneWeights = new HashMap<>();
+        offZoneWeights.put(1,new Integer[]{25,5,70});
+        offZoneWeights.put(2,new Integer[]{30,30,40});
+        offZoneWeights.put(3,new Integer[]{35,45,20});
+        offZoneWeights.put(4,new Integer[]{45,35,20});
+        offZoneWeights.put(5,new Integer[]{70,5,25});
+        offZoneWeights.put(6,new Integer[]{25,5,70});
+        offZoneWeights.put(7,new Integer[]{20,50,30});
+        offZoneWeights.put(8,new Integer[]{15,80,5});
+        offZoneWeights.put(9,new Integer[]{10,90,0});
+        offZoneWeights.put(10,new Integer[]{75,0,25});
+        offZoneWeights.put(11,new Integer[]{25,5,70});
+        offZoneWeights.put(12,new Integer[]{30,30,40});
+        offZoneWeights.put(13,new Integer[]{35,45,20});
+        offZoneWeights.put(14,new Integer[]{45,35,20});
+        offZoneWeights.put(15,new Integer[]{70,5,25});
+    }
+
     //Fields
     //boarders of rink
     private static int xFullMin = 104;
@@ -49,7 +70,7 @@ public class Arena {
     public static boolean onIce(int x,int y){
         //calculate x
         if(x<xFullMin || x>xFullMax ){//outside full rink on x
-            System.out.println(x);
+            //System.out.println(x);
             System.out.println("outside full rink on x");
             return false;
         }
@@ -220,6 +241,10 @@ public class Arena {
             instance = new Arena();
         }
         return instance;
+    }
+
+    public Integer[] getOffensiveZoneWeight(int zone){
+        return offZoneWeights.get(zone);
     }
 
 }

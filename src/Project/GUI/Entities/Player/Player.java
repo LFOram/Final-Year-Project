@@ -85,9 +85,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
     private void setCircleNumber(ArrayList<BufferedImage> numbers){
         if (player.number.length()==1){
             numberOffset = 7;
-            //System.out.println(player.name);
-            //System.out.println(player.number);
-            //System.out.println(numbers.toString());
             circleNumber = numbers.get(Integer.parseInt(player.number));
         }
         else {
@@ -166,6 +163,7 @@ public abstract class Player extends Entity implements PropertyChangeListener {
             }
         } else {
             //is goalie
+            this.setPlayerState(new GoaliePlayerState((Goalie)this));
         }
     }
 
@@ -217,7 +215,6 @@ public abstract class Player extends Entity implements PropertyChangeListener {
 
     @Override
     public void tick() {
-        updateState();
         playerState.think();
         playerState.act();
     }

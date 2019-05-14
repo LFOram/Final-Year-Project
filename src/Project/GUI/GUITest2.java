@@ -10,7 +10,7 @@ public class GUITest2{
     private JFrame frame;
     private Canvas canvas;
 
-    private String title = "FSTHS";
+    private String title = "Hockey Sim Engine";
     private int width = 1211;
     private int height = 535;
 

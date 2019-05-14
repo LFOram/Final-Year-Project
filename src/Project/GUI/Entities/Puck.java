@@ -20,6 +20,7 @@ public class Puck extends Entity {
     private Possession lastTouch;
     private int direction = 1;
     private float angle;
+    private int puckTimer =0;
 
     public BufferedImage puck = Assets.puck;
     Arena arena = Arena.getArena();
@@ -65,8 +66,8 @@ public class Puck extends Entity {
 
     private void movePuck() {
 
-        System.out.println(targetX + " " + targetY + "PUCK" + xVelocity);
-        float decel = 0.005f;
+        //System.out.println(targetX + " " + targetY + "PUCK" + xVelocity);
+        float decel = 0.01f;
         if (xVelocity > 0.1) {
             if (xVelocity >= 0) {
                 xVelocity = xVelocity - decel;
@@ -87,12 +88,12 @@ public class Puck extends Entity {
         float ty1 = (float) (y + yVelocity * sin(angle));
         float ty2 = (float) (y + bounds.height + yVelocity * sin(angle));
         if(game.getArena().legalMove(tx1,tx2,ty1,ty2)) {
-            System.out.println(x + " " + y);
-            System.out.println( xVelocity * cos(angle));
-            System.out.println( yVelocity * sin(angle));
+            //System.out.println(x + " " + y);
+            //System.out.println( xVelocity * cos(angle));
+            //System.out.println( yVelocity * sin(angle));
             x += xVelocity * cos(angle);
             y += yVelocity * sin(angle);
-            System.out.println("MOVING");
+            //System.out.println("MOVING");
         }
         else {
             int bounce = game.getArena().getBounce(x,y);
@@ -130,10 +131,23 @@ public class Puck extends Entity {
         return yVelocity;
     }
 
+    public void resetPuckTimer(){
+        puckTimer = 0;
+    }
+
+    public int getPuckTimer() {
+        return puckTimer;
+    }
+
+    private void tickPuckTimer(){
+        puckTimer++;
+    }
+
     @Override
     public void tick() {
         movePuck();
         updateBounds(x,y);
+        tickPuckTimer();
     }
 
     @Override
